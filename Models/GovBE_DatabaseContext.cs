@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace PPLTHD_BE.Models;
+namespace GovBE.Models;
 
-public partial class pplthd_daContext : DbContext
+public partial class GovBE_DatabaseContext : DbContext
 {
-    public pplthd_daContext(DbContextOptions<pplthd_daContext> options)
+    public GovBE_DatabaseContext(DbContextOptions<GovBE_DatabaseContext> options)
         : base(options)
     {
     }

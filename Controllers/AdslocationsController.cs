@@ -5,17 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PPLTHD_BE.Models;
+using GovBE.Models;
 
-namespace PPLTHD_BE.Controllers
+namespace GovBE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AdslocationsController : ControllerBase
     {
-        private readonly pplthd_daContext _context;
+        private readonly GovBE_DatabaseContext _context;
 
-        public AdslocationsController(pplthd_daContext context)
+        public AdslocationsController(GovBE_DatabaseContext context)
         {
             _context = context;
         }

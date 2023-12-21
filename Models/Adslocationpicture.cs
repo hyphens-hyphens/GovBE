@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PPLTHD_BE.Models;
+namespace GovBE.Models;
 
 public partial class Adslocationpicture
 {

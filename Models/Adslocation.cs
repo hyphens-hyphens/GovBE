@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PPLTHD_BE.Models;
+namespace GovBE.Models;
 
 public partial class Adslocation
 {
@@ -37,7 +37,7 @@ public partial class Adslocation
 
     public int? UpdateUserId { get; set; }
 
-    public bool IsActive { get; set; }
+    public ulong IsActive { get; set; }
 
     public virtual ICollection<Adsadvertising> Adsadvertisings { get; set; } = new List<Adsadvertising>();
 

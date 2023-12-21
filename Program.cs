@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
-using PPLTHD_BE.Models;
+using GovBE.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("GovBE_Database")
+    ?? throw new Exception("Can't not get connection string");
+
 builder.Services
-    .AddDbContext<pplthd_daContext>(options =>
-        options.UseMySql(builder.Configuration.GetConnectionString("PPLTHD_BEContext"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("PPLTHD_BEContext"))));
+    .AddDbContext<GovBE_DatabaseContext>(options =>
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 // Add services to the container.
 
 builder.Services.AddControllers();
