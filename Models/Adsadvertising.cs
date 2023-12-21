@@ -63,7 +63,7 @@ public partial class Adsadvertising
 
     public int? UpdateUserId { get; set; }
 
-    public ulong IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public virtual Adslocation AdsLocation { get; set; }
 

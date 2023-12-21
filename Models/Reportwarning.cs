@@ -31,7 +31,7 @@ public partial class Reportwarning
 
     public int? UpdateUserId { get; set; }
 
-    public ulong IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public virtual Adslocation AdsLocation { get; set; }
 
