@@ -2,12 +2,11 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using PPLTHD_BE.Models;
-using PPLTHD_BE.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
-string connectionString = builder.Configuration.GetConnectionString("PPLTHD_BEContext")
-    ?? throw new InvalidOperationException("Connection string 'PPLTHD_BEContext' not found.");
-builder.Services.AddDbContext<pplthd_daContext>(options => options.UseSqlServer(connectionString));
+builder.Services
+    .AddDbContext<pplthd_daContext>(options =>
+        options.UseMySql(builder.Configuration.GetConnectionString("PPLTHD_BEContext"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("PPLTHD_BEContext"))));
 // Add services to the container.
 
 builder.Services.AddControllers();
