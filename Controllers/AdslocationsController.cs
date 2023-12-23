@@ -23,31 +23,59 @@ namespace GovBE.Controllers
 
         // GET: api/Adslocations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BaseResponse<Adslocation>>>> GetAdslocations()
+        public async Task<BaseResponse<List<Adslocation>>> GetAdslocations()
         {
-          if (_context.Adslocations == null)
-          {
-              return NotFound();
-          }
-            return await _context.Adslocations.ToListAsync();
+            if (_context.Adslocations == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Ads not found"
+                };
+            }
+            var list = await _context.Adslocations.ToListAsync();
+            return new BaseResponse<List<Adslocation>>()
+            {
+                Data = list,
+                ErrorMessage = string.Empty,
+                IsError = false,
+                Status = 200
+            };
         }
 
         // GET: api/Adslocations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<Adslocation>>> GetAdslocation(int id)
+        public async Task<BaseResponse<Adslocation>> GetAdslocation(int id)
         {
-          if (_context.Adslocations == null)
-          {
-              return NotFound();
-          }
+            if (_context.Adslocations == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Ads not found"
+                };
+            }
             var adslocation = await _context.Adslocations.FindAsync(id);
 
             if (adslocation == null)
             {
-                return NotFound();
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Ads not found"
+                };
             }
 
-            return adslocation;
+            return new BaseResponse<Adslocation>
+            {
+                ErrorMessage = string.Empty,
+                Status = 200,
+                Data = adslocation,
+                IsError = false
+            };
         }
 
         // PUT: api/Adslocations/5
@@ -57,7 +85,12 @@ namespace GovBE.Controllers
         {
             if (id != adslocation.AdsLocationId)
             {
-                return BadRequest();
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Update failed"
+                };
             }
 
             _context.Entry(adslocation).State = EntityState.Modified;
@@ -70,7 +103,12 @@ namespace GovBE.Controllers
             {
                 if (!AdslocationExists(id))
                 {
-                    return NotFound();
+                    return new()
+                    {
+                        IsError = true,
+                        Data = new(),
+                        ErrorMessage = "Ads not found"
+                    };
                 }
                 else
                 {
@@ -78,22 +116,32 @@ namespace GovBE.Controllers
                 }
             }
 
-            return NoContent();
+            return new()
+            {
+                IsError = false,
+            };
         }
 
         // POST: api/Adslocations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<BaseResponse<Adslocation>> PostAdslocation(Adslocation adslocation)
+        public async Task<BaseResponse<bool>> PostAdslocation(Adslocation adslocation)
         {
-          if (_context.Adslocations == null)
-          {
-              return Problem("Entity set 'pplthd_daContext.Adslocations'  is null.");
-          }
+            if (_context.Adslocations == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Entity set 'pplthd_daContext.Adslocations'  is null."
+                };
+            }
             _context.Adslocations.Add(adslocation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdslocation", new { id = adslocation.AdsLocationId }, adslocation);
+            return new()
+            {
+                IsError = false
+            };
         }
 
         // DELETE: api/Adslocations/5
@@ -102,18 +150,25 @@ namespace GovBE.Controllers
         {
             if (_context.Adslocations == null)
             {
-                
+
             }
             var adslocation = await _context.Adslocations.FindAsync(id);
             if (adslocation == null)
             {
-                return NotFound();
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Ads location not found."
+                };
             }
 
             _context.Adslocations.Remove(adslocation);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return new()
+            {
+                IsError = false
+            };
         }
 
         private bool AdslocationExists(int id)
