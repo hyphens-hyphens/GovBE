@@ -13,15 +13,15 @@ public partial class GovBE_DatabaseContext : DbContext
     {
     }
 
-    public virtual DbSet<Adsadvertising> Adsadvertisings { get; set; }
-
-    public virtual DbSet<Adsadvertisingpicture> Adsadvertisingpictures { get; set; }
-
     public virtual DbSet<Adslocation> Adslocations { get; set; }
 
     public virtual DbSet<Adslocationpicture> Adslocationpictures { get; set; }
 
     public virtual DbSet<Adslocationupdate> Adslocationupdates { get; set; }
+
+    public virtual DbSet<Adsnew> Adsnews { get; set; }
+
+    public virtual DbSet<Adsnewpicture> Adsnewpictures { get; set; }
 
     public virtual DbSet<Reportwarning> Reportwarnings { get; set; }
 
@@ -33,13 +33,55 @@ public partial class GovBE_DatabaseContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
-        modelBuilder.Entity<Adsadvertising>(entity =>
+        modelBuilder.Entity<Adslocation>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("adsadvertising");
+            entity.ToTable("adslocation");
 
-            entity.HasIndex(e => e.AdsLocationId, "AdsLocationId");
+            entity.Property(e => e.AdsAddress)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Latitute).HasPrecision(10);
+            entity.Property(e => e.Longtitute).HasPrecision(10);
+            entity.Property(e => e.SizeUnit)
+                .HasMaxLength(20)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Adslocationpicture>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("adslocationpicture");
+
+            entity.Property(e => e.HinhAnh).HasColumnType("mediumblob");
+        });
+
+        modelBuilder.Entity<Adslocationupdate>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("adslocationupdate");
+
+            entity.Property(e => e.Comment)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Date).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<Adsnew>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("adsnew");
 
             entity.Property(e => e.AdsAddress)
                 .HasMaxLength(200)
@@ -86,81 +128,15 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.Property(e => e.Ward)
                 .HasMaxLength(100)
                 .IsFixedLength();
-
-            entity.HasOne(d => d.AdsLocation).WithMany(p => p.Adsadvertisings)
-                .HasForeignKey(d => d.AdsLocationId)
-                .HasConstraintName("adsadvertising_ibfk_1");
         });
 
-        modelBuilder.Entity<Adsadvertisingpicture>(entity =>
+        modelBuilder.Entity<Adsnewpicture>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("adsadvertisingpicture");
-
-            entity.HasIndex(e => e.AdsAdvertisingId, "AdsAdvertisingId");
+            entity.ToTable("adsnewpicture");
 
             entity.Property(e => e.HinhAnh).HasColumnType("mediumblob");
-
-            entity.HasOne(d => d.AdsAdvertising).WithMany(p => p.Adsadvertisingpictures)
-                .HasForeignKey(d => d.AdsAdvertisingId)
-                .HasConstraintName("adsadvertisingpicture_ibfk_1");
-        });
-
-        modelBuilder.Entity<Adslocation>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("adslocation");
-
-            entity.Property(e => e.AdsAddress)
-                .HasMaxLength(200)
-                .IsFixedLength();
-            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.EndDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive)
-                .HasDefaultValueSql("b'1'")
-                .HasColumnType("bit(1)");
-            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Latitute).HasPrecision(10);
-            entity.Property(e => e.Longtitute).HasPrecision(10);
-            entity.Property(e => e.SizeUnit)
-                .HasMaxLength(20)
-                .IsFixedLength();
-        });
-
-        modelBuilder.Entity<Adslocationpicture>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("adslocationpicture");
-
-            entity.HasIndex(e => e.AdsLocationId, "AdsLocationId");
-
-            entity.Property(e => e.HinhAnh).HasColumnType("mediumblob");
-
-            entity.HasOne(d => d.AdsLocation).WithMany(p => p.Adslocationpictures)
-                .HasForeignKey(d => d.AdsLocationId)
-                .HasConstraintName("adslocationpicture_ibfk_1");
-        });
-
-        modelBuilder.Entity<Adslocationupdate>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("adslocationupdate");
-
-            entity.HasIndex(e => e.AdsLocationId, "AdsLocationId");
-
-            entity.Property(e => e.Comment)
-                .HasMaxLength(200)
-                .IsFixedLength();
-            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Date).HasColumnType("datetime");
-
-            entity.HasOne(d => d.AdsLocation).WithMany(p => p.Adslocationupdates)
-                .HasForeignKey(d => d.AdsLocationId)
-                .HasConstraintName("adslocationupdate_ibfk_1");
         });
 
         modelBuilder.Entity<Reportwarning>(entity =>
@@ -168,8 +144,6 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("reportwarning");
-
-            entity.HasIndex(e => e.AdsLocationId, "AdsLocationId");
 
             entity.Property(e => e.Comment)
                 .HasMaxLength(200)
@@ -188,10 +162,6 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(100)
                 .IsFixedLength();
-
-            entity.HasOne(d => d.AdsLocation).WithMany(p => p.Reportwarnings)
-                .HasForeignKey(d => d.AdsLocationId)
-                .HasConstraintName("reportwarning_ibfk_1");
         });
 
         modelBuilder.Entity<Reportwarningurl>(entity =>
@@ -200,16 +170,10 @@ public partial class GovBE_DatabaseContext : DbContext
 
             entity.ToTable("reportwarningurl");
 
-            entity.HasIndex(e => e.ReportWarningId, "ReportWarningId");
-
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.Url)
                 .HasMaxLength(200)
                 .IsFixedLength();
-
-            entity.HasOne(d => d.ReportWarning).WithMany(p => p.Reportwarningurls)
-                .HasForeignKey(d => d.ReportWarningId)
-                .HasConstraintName("reportwarningurl_ibfk_1");
         });
 
         OnModelCreatingPartial(modelBuilder);

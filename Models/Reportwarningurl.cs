@@ -16,6 +16,4 @@ public partial class Reportwarningurl
     public DateTime? CreateOnUtc { get; set; }
 
     public int? CreateUserId { get; set; }
-
-    public virtual Reportwarning ReportWarning { get; set; }
 }

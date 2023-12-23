@@ -16,14 +16,6 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "adsadvertising",
-         "ObjectType": 0
-      },
-      {
-         "Name": "adsadvertisingpicture",
-         "ObjectType": 0
-      },
-      {
          "Name": "adslocation",
          "ObjectType": 0
       },
@@ -36,6 +28,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "adsnew",
+         "ObjectType": 0
+      },
+      {
+         "Name": "adsnewpicture",
+         "ObjectType": 0
+      },
+      {
          "Name": "reportwarning",
          "ObjectType": 0
       },
@@ -44,7 +44,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "PPLTHD_DA",
+   "UiHint": "GovBE",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

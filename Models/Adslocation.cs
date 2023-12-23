@@ -38,12 +38,4 @@ public partial class Adslocation
     public int? UpdateUserId { get; set; }
 
     public ulong IsActive { get; set; }
-
-    public virtual ICollection<Adsadvertising> Adsadvertisings { get; set; } = new List<Adsadvertising>();
-
-    public virtual ICollection<Adslocationpicture> Adslocationpictures { get; set; } = new List<Adslocationpicture>();
-
-    public virtual ICollection<Adslocationupdate> Adslocationupdates { get; set; } = new List<Adslocationupdate>();
-
-    public virtual ICollection<Reportwarning> Reportwarnings { get; set; } = new List<Reportwarning>();
 }

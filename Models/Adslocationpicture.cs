@@ -12,6 +12,4 @@ public partial class Adslocationpicture
     public byte[] HinhAnh { get; set; }
 
     public int? AdsLocationId { get; set; }
-
-    public virtual Adslocation AdsLocation { get; set; }
 }

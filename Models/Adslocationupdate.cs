@@ -22,6 +22,4 @@ public partial class Adslocationupdate
     public DateTime? CreateOnUtc { get; set; }
 
     public int? CreateUserId { get; set; }
-
-    public virtual Adslocation AdsLocation { get; set; }
 }

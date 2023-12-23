@@ -1,4 +1,6 @@
 /* Điểm quảng cáo */
+#database GovBE
+
 Create table AdsLocation (
 	Id INT AUTO_INCREMENT PRIMARY KEY,
     AdsAddress char(200),
@@ -24,7 +26,7 @@ Create table AdsLocation (
 );
 
 /*Quảng cáo trên điểm quảng cáo*/
-Create Table AdsAdvertising(
+Create Table AdsNew(
 	Id INT AUTO_INCREMENT PRIMARY KEY,
     AdsLocationId int,
     Comment char(200),
@@ -63,26 +65,24 @@ Create Table AdsAdvertising(
     CreateUserId int null,
     UpdateUserId int null,
     
-    IsActive bit not null default 1,
-    
-    FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
+    IsActive bit not null default 1
 );
 
 /*Hình ảnh của quảng cáo*/
-Create Table AdsAdvertisingPicture
+Create Table AdsNewPicture
 (
 	Id INT AUTO_INCREMENT PRIMARY KEY,
 	HinhAnh MEDIUMBLOB,
-    AdsAdvertisingId int,
-    FOREIGN KEY (AdsAdvertisingId) REFERENCES AdsAdvertising(Id)
+    AdsNewId int
+    #FOREIGN KEY (AdsNewId) REFERENCES AdsNew(Id)
 );
 /*Hình ảnh của điểm quảng cáo*/
 Create Table AdsLocationPicture(
 
 	Id INT AUTO_INCREMENT PRIMARY KEY,
 	HinhAnh MEDIUMBLOB,
-    AdsLocationId int,
-    FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
+    AdsLocationId int
+    #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
 );
 
 Create Table ReportWarning (
@@ -100,9 +100,9 @@ Create Table ReportWarning (
     CreateUserId int null,
     UpdateUserId int null,
     
-    IsActive bit not null default 1,
+    IsActive bit not null default 1
     
-    FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
+    #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
 );
 
 Create Table ReportWarningUrl (
@@ -111,9 +111,9 @@ Create Table ReportWarningUrl (
     Url char(200),
     
     CreateOnUtc DateTime,
-    CreateUserId int null,
+    CreateUserId int null
     
-    FOREIGN KEY (ReportWarningId) REFERENCES ReportWarning(Id)
+     #FOREIGN KEY (ReportWarningId) REFERENCES ReportWarning(Id)
 );
 
 Create Table AdsLocationUpdate (
@@ -125,6 +125,49 @@ Create Table AdsLocationUpdate (
     NewStatus int,
     
     CreateOnUtc DateTime,
-    CreateUserId int null,
-    FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
+    CreateUserId int null
+   #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
 );
+
+
+-- Inserting sample data into AdsLocation table
+INSERT INTO AdsLocation (AdsAddress, Width, Height, SizeUnit, Quantity, Latitute, Longtitute, TypeAds, Status, EndDate, CreateOnUtc, LastUpdateOnUtc, CreateUserId, UpdateUserId)
+VALUES 
+    ('123 Main St', 5.0, 3.0, 'inches', 10, 40.7128, -74.0060, 1, 1, '2023-12-31', '2023-01-01', '2023-12-22', 1, 1),
+    ('456 Elm St', 8.0, 4.0, 'inches', 5, 34.0522, -118.2437, 2, 2, '2023-12-30', '2023-01-02', '2023-12-23', 2, 2);
+
+-- Inserting sample data into AdsNew table
+INSERT INTO AdsNew (AdsLocationId, Comment, Width, Height, SizeUnit, Latitute, Longtitute, Name, AdsAddress, KhuVuc, LoaiViTri, HinhThucQuangCao, Description, NgayBatDauHd, NgayKetThucHd, CompanyInfo, Email, CompanyAddress, PhoneNumber, City, District, Ward, ProcessingStatus, CreateOnUtc, LastUpdateOnUtc)
+VALUES 
+    (1, 'New ad', 5.0, 3.0, 'inches', 40.7128, -74.0060, 'ABC Company', '123 Main St', 1, 1, 1, 'Description of ad', '2023-01-01', '2023-12-31', 'XYZ Corp', 'xyz@example.com', '789 Elm St', '123-456-7890', 'Los Angeles', 'Downtown', 'Central', 1, '2023-12-22', '2023-12-22');
+
+-- Inserting sample data into AdsNewPicture table
+INSERT INTO AdsNewPicture (HinhAnh, AdsNewId)
+VALUES 
+    (LOAD_FILE('/path/to/image1.jpg'), 1),
+    (LOAD_FILE('/path/to/image2.jpg'), 1);
+
+-- Inserting sample data into AdsLocationPicture table
+INSERT INTO AdsLocationPicture (HinhAnh, AdsLocationId)
+VALUES 
+    (LOAD_FILE('/path/to/image3.jpg'), 1),
+    (LOAD_FILE('/path/to/image4.jpg'), 2);
+
+-- Inserting sample data into ReportWarning table
+INSERT INTO ReportWarning (WarmType, FullName, Email, PhoneNumber, Comment, AdsLocationId, Status, CreateOnUtc, LastUpdateOnUtc)
+VALUES 
+    (1, 'John Doe', 'john@example.com', '123-456-7890', 'Report warning comment', 1, 1, '2023-12-22', '2023-12-22'),
+    (2, 'Jane Smith', 'jane@example.com', '987-654-3210', 'Another warning', 2, 2, '2023-12-23', '2023-12-23');
+
+-- Inserting sample data into ReportWarningUrl table
+INSERT INTO ReportWarningUrl (ReportWarningId, Url, CreateOnUtc, CreateUserId)
+VALUES 
+    (1, 'https://example.com/report1', '2023-12-22', 1),
+    (2, 'https://example.com/report2', '2023-12-23', 2);
+
+-- Inserting sample data into AdsLocationUpdate table
+INSERT INTO AdsLocationUpdate (AdsLocationId, Date, Comment, OldStatus, NewStatus, CreateOnUtc, CreateUserId)
+VALUES 
+    (1, '2023-12-22', 'Updating status', 1, 2, '2023-12-22', 1),
+    (2, '2023-12-23', 'Another update', 2, 3, '2023-12-23', 2);
+

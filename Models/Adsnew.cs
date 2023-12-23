@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GovBE.Models;
 
-public partial class Adsadvertising
+public partial class Adsnew
 {
     public int Id { get; set; }
 
@@ -64,8 +64,4 @@ public partial class Adsadvertising
     public int? UpdateUserId { get; set; }
 
     public ulong IsActive { get; set; }
-
-    public virtual Adslocation AdsLocation { get; set; }
-
-    public virtual ICollection<Adsadvertisingpicture> Adsadvertisingpictures { get; set; } = new List<Adsadvertisingpicture>();
 }

@@ -5,13 +5,11 @@ using System.Collections.Generic;
 
 namespace GovBE.Models;
 
-public partial class Adsadvertisingpicture
+public partial class Adsnewpicture
 {
     public int Id { get; set; }
 
     public byte[] HinhAnh { get; set; }
 
-    public int? AdsAdvertisingId { get; set; }
-
-    public virtual Adsadvertising AdsAdvertising { get; set; }
+    public int? AdsNewId { get; set; }
 }
