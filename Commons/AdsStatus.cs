@@ -2,5 +2,9 @@
 {
     public enum AdsStatus
     {
+        HetHan,
+        ConHan,
+        ViPham,
+        ChuaXetDuyet
     }
 }

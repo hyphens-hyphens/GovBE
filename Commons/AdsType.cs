@@ -2,7 +2,15 @@
 {
     public enum AdsType
     {
-        TruBangHitflex = 0,
-        TruManHinhDienTuLex,
+        TruBangHiflex = 0,
+        TruManHinhDienTuLed,
+        TruHopDen,
+        BanHiflexOpTuong,
+        ManHinhDienTuOpTuong,
+        TruTreoBangRonDoc,
+        TruTreoBangRonNgang,
+        TruCumPano,
+        CongChao,
+        TrungTamThuongMai
     }
 }
