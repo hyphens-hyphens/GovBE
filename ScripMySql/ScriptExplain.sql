@@ -1,5 +1,3 @@
-/* Điểm quảng cáo */
-#database GovBE
 
 Create table AdsLocation (
 	AdsLocationId INT AUTO_INCREMENT PRIMARY KEY,

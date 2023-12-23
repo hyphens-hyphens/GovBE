@@ -12,11 +12,11 @@ namespace GovBE.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdslocationsController : ControllerBase
+    public class AdsLocationsController : ControllerBase
     {
         private readonly GovBE_DatabaseContext _context;
 
-        public AdslocationsController(GovBE_DatabaseContext context)
+        public AdsLocationsController(GovBE_DatabaseContext context)
         {
             _context = context;
         }
@@ -150,7 +150,11 @@ namespace GovBE.Controllers
         {
             if (_context.Adslocations == null)
             {
-
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Ads location context not found."
+                };
             }
             var adslocation = await _context.Adslocations.FindAsync(id);
             if (adslocation == null)
