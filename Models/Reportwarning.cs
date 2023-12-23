@@ -7,9 +7,9 @@ namespace GovBE.Models;
 
 public partial class Reportwarning
 {
-    public int Id { get; set; }
+    public int ReportWarningId { get; set; }
 
-    public int? WarmType { get; set; }
+    public string WarningType { get; set; }
 
     public string FullName { get; set; }
 
@@ -21,13 +21,13 @@ public partial class Reportwarning
 
     public int? AdsLocationId { get; set; }
 
-    public int? Status { get; set; }
+    public string ReportWarningStatus { get; set; }
+
+    public int? CreateUserId { get; set; }
 
     public DateTime? CreateOnUtc { get; set; }
 
     public DateTime? LastUpdateOnUtc { get; set; }
-
-    public int? CreateUserId { get; set; }
 
     public int? UpdateUserId { get; set; }
 

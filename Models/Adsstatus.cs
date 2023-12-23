@@ -5,17 +5,13 @@ using System.Collections.Generic;
 
 namespace GovBE.Models;
 
-public partial class Adslocationupdate
+public partial class Adsstatus
 {
-    public int AdsLocationUpdateId { get; set; }
+    public int AdsStatusId { get; set; }
 
-    public int? AdsLocationId { get; set; }
+    public string Name { get; set; }
 
-    public DateTime? Date { get; set; }
-
-    public string Comment { get; set; }
-
-    public string StatusEdit { get; set; }
+    public string DisplayName { get; set; }
 
     public DateTime? CreateOnUtc { get; set; }
 

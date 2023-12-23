@@ -54,7 +54,7 @@ namespace GovBE.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAdslocation(int id, Adslocation adslocation)
         {
-            if (id != adslocation.Id)
+            if (id != adslocation.AdsLocationId)
             {
                 return BadRequest();
             }
@@ -92,7 +92,7 @@ namespace GovBE.Controllers
             _context.Adslocations.Add(adslocation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdslocation", new { id = adslocation.Id }, adslocation);
+            return CreatedAtAction("GetAdslocation", new { id = adslocation.AdsLocationId }, adslocation);
         }
 
         // DELETE: api/Adslocations/5
@@ -117,7 +117,7 @@ namespace GovBE.Controllers
 
         private bool AdslocationExists(int id)
         {
-            return (_context.Adslocations?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Adslocations?.Any(e => e.AdsLocationId == id)).GetValueOrDefault();
         }
     }
 }

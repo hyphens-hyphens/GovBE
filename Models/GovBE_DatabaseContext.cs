@@ -15,17 +15,25 @@ public partial class GovBE_DatabaseContext : DbContext
 
     public virtual DbSet<Adslocation> Adslocations { get; set; }
 
-    public virtual DbSet<Adslocationpicture> Adslocationpictures { get; set; }
+    public virtual DbSet<Adslocationimage> Adslocationimages { get; set; }
 
     public virtual DbSet<Adslocationupdate> Adslocationupdates { get; set; }
 
     public virtual DbSet<Adsnew> Adsnews { get; set; }
 
-    public virtual DbSet<Adsnewpicture> Adsnewpictures { get; set; }
+    public virtual DbSet<Adsnewimage> Adsnewimages { get; set; }
+
+    public virtual DbSet<Adsprocessing> Adsprocessings { get; set; }
+
+    public virtual DbSet<Adsstatus> Adsstatuses { get; set; }
+
+    public virtual DbSet<Adstype> Adstypes { get; set; }
 
     public virtual DbSet<Reportwarning> Reportwarnings { get; set; }
 
     public virtual DbSet<Reportwarningurl> Reportwarningurls { get; set; }
+
+    public virtual DbSet<Warningtype> Warningtypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,12 +43,15 @@ public partial class GovBE_DatabaseContext : DbContext
 
         modelBuilder.Entity<Adslocation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.AdsLocationId).HasName("PRIMARY");
 
             entity.ToTable("adslocation");
 
             entity.Property(e => e.AdsAddress)
                 .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.AdsStatus)
+                .HasMaxLength(30)
                 .IsFixedLength();
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.EndDate).HasColumnType("datetime");
@@ -48,25 +59,27 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Latitute).HasPrecision(10);
-            entity.Property(e => e.Longtitute).HasPrecision(10);
+            entity.Property(e => e.Latitude).HasPrecision(10);
+            entity.Property(e => e.Longtitude).HasPrecision(10);
             entity.Property(e => e.SizeUnit)
                 .HasMaxLength(20)
                 .IsFixedLength();
+            entity.Property(e => e.TypeId).HasColumnName("TypeID");
         });
 
-        modelBuilder.Entity<Adslocationpicture>(entity =>
+        modelBuilder.Entity<Adslocationimage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.AdsLocationImageId).HasName("PRIMARY");
 
-            entity.ToTable("adslocationpicture");
+            entity.ToTable("adslocationimage");
 
-            entity.Property(e => e.HinhAnh).HasColumnType("mediumblob");
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Image).HasColumnType("mediumblob");
         });
 
         modelBuilder.Entity<Adslocationupdate>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.AdsLocationUpdateId).HasName("PRIMARY");
 
             entity.ToTable("adslocationupdate");
 
@@ -75,11 +88,18 @@ public partial class GovBE_DatabaseContext : DbContext
                 .IsFixedLength();
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.StatusEdit)
+                .HasMaxLength(30)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<Adsnew>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.AdsNewId).HasName("PRIMARY");
 
             entity.ToTable("adsnew");
 
@@ -99,49 +119,105 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasMaxLength(200)
                 .IsFixedLength();
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Description)
-                .HasMaxLength(255)
-                .IsFixedLength();
             entity.Property(e => e.District)
                 .HasMaxLength(100)
                 .IsFixedLength();
             entity.Property(e => e.Email)
                 .HasMaxLength(60)
                 .IsFixedLength();
+            entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.IsActive)
                 .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Latitute).HasPrecision(10);
-            entity.Property(e => e.Longtitute).HasPrecision(10);
-            entity.Property(e => e.Name)
-                .HasMaxLength(200)
-                .IsFixedLength();
-            entity.Property(e => e.NgayBatDauHd).HasColumnType("datetime");
-            entity.Property(e => e.NgayKetThucHd).HasColumnType("datetime");
+            entity.Property(e => e.Latitude).HasPrecision(10);
+            entity.Property(e => e.Longtitude).HasPrecision(10);
             entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(200)
+                .HasMaxLength(20)
+                .IsFixedLength();
+            entity.Property(e => e.ProcessingStatus)
+                .HasMaxLength(30)
                 .IsFixedLength();
             entity.Property(e => e.SizeUnit)
                 .HasMaxLength(20)
                 .IsFixedLength();
+            entity.Property(e => e.StartDate).HasColumnType("datetime");
             entity.Property(e => e.Ward)
                 .HasMaxLength(100)
                 .IsFixedLength();
         });
 
-        modelBuilder.Entity<Adsnewpicture>(entity =>
+        modelBuilder.Entity<Adsnewimage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.AdsNewImageId).HasName("PRIMARY");
 
-            entity.ToTable("adsnewpicture");
+            entity.ToTable("adsnewimage");
 
-            entity.Property(e => e.HinhAnh).HasColumnType("mediumblob");
+            entity.Property(e => e.AdsNewId).HasColumnName("AdsNewID");
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Image).HasColumnType("mediumblob");
+        });
+
+        modelBuilder.Entity<Adsprocessing>(entity =>
+        {
+            entity.HasKey(e => e.AdsProcessingId).HasName("PRIMARY");
+
+            entity.ToTable("adsprocessing");
+
+            entity.Property(e => e.Comment)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.ProcessingStatus)
+                .HasMaxLength(30)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Adsstatus>(entity =>
+        {
+            entity.HasKey(e => e.AdsStatusId).HasName("PRIMARY");
+
+            entity.ToTable("adsstatus");
+
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.DisplayName)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Adstype>(entity =>
+        {
+            entity.HasKey(e => e.AdsTypeId).HasName("PRIMARY");
+
+            entity.ToTable("adstype");
+
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.DisplayName)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<Reportwarning>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.ReportWarningId).HasName("PRIMARY");
 
             entity.ToTable("reportwarning");
 
@@ -160,18 +236,43 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(100)
+                .HasMaxLength(20)
+                .IsFixedLength();
+            entity.Property(e => e.ReportWarningStatus)
+                .HasMaxLength(30)
+                .IsFixedLength();
+            entity.Property(e => e.WarningType)
+                .HasMaxLength(30)
                 .IsFixedLength();
         });
 
         modelBuilder.Entity<Reportwarningurl>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.HasKey(e => e.ReportWarningImageId).HasName("PRIMARY");
 
             entity.ToTable("reportwarningurl");
 
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.Url)
+                .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Warningtype>(entity =>
+        {
+            entity.HasKey(e => e.WarningTypeId).HasName("PRIMARY");
+
+            entity.ToTable("warningtype");
+
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.DisplayName)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Name)
                 .HasMaxLength(200)
                 .IsFixedLength();
         });

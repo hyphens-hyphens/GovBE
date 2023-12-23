@@ -7,37 +7,15 @@ namespace GovBE.Models;
 
 public partial class Adsnew
 {
-    public int Id { get; set; }
+    public int AdsNewId { get; set; }
 
     public int? AdsLocationId { get; set; }
 
+    public DateTime? StartDate { get; set; }
+
+    public DateTime? EndDate { get; set; }
+
     public string Comment { get; set; }
-
-    public float? Width { get; set; }
-
-    public float? Height { get; set; }
-
-    public string SizeUnit { get; set; }
-
-    public decimal? Latitute { get; set; }
-
-    public decimal? Longtitute { get; set; }
-
-    public string Name { get; set; }
-
-    public string AdsAddress { get; set; }
-
-    public int? KhuVuc { get; set; }
-
-    public int? LoaiViTri { get; set; }
-
-    public int? HinhThucQuangCao { get; set; }
-
-    public string Description { get; set; }
-
-    public DateTime? NgayBatDauHd { get; set; }
-
-    public DateTime? NgayKetThucHd { get; set; }
 
     public string CompanyInfo { get; set; }
 
@@ -53,13 +31,25 @@ public partial class Adsnew
 
     public string Ward { get; set; }
 
-    public int? ProcessingStatus { get; set; }
+    public float? Width { get; set; }
+
+    public float? Height { get; set; }
+
+    public string SizeUnit { get; set; }
+
+    public string AdsAddress { get; set; }
+
+    public decimal? Latitude { get; set; }
+
+    public decimal? Longtitude { get; set; }
+
+    public string ProcessingStatus { get; set; }
+
+    public int? CreateUserId { get; set; }
 
     public DateTime? CreateOnUtc { get; set; }
 
     public DateTime? LastUpdateOnUtc { get; set; }
-
-    public int? CreateUserId { get; set; }
 
     public int? UpdateUserId { get; set; }
 
