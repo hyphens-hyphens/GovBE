@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovBE.Models;
+using GovBE.Commons;
 
 namespace GovBE.Controllers
 {
@@ -22,7 +23,7 @@ namespace GovBE.Controllers
 
         // GET: api/Adslocations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Adslocation>>> GetAdslocations()
+        public async Task<ActionResult<IEnumerable<BaseResponse<Adslocation>>>> GetAdslocations()
         {
           if (_context.Adslocations == null)
           {
@@ -33,7 +34,7 @@ namespace GovBE.Controllers
 
         // GET: api/Adslocations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Adslocation>> GetAdslocation(int id)
+        public async Task<ActionResult<BaseResponse<Adslocation>>> GetAdslocation(int id)
         {
           if (_context.Adslocations == null)
           {
@@ -52,7 +53,7 @@ namespace GovBE.Controllers
         // PUT: api/Adslocations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAdslocation(int id, Adslocation adslocation)
+        public async Task<BaseResponse<bool>> PutAdslocation(int id, Adslocation adslocation)
         {
             if (id != adslocation.Id)
             {
@@ -83,7 +84,7 @@ namespace GovBE.Controllers
         // POST: api/Adslocations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Adslocation>> PostAdslocation(Adslocation adslocation)
+        public async Task<BaseResponse<Adslocation>> PostAdslocation(Adslocation adslocation)
         {
           if (_context.Adslocations == null)
           {
@@ -97,11 +98,11 @@ namespace GovBE.Controllers
 
         // DELETE: api/Adslocations/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAdslocation(int id)
+        public async Task<BaseResponse<bool>> DeleteAdslocation(int id)
         {
             if (_context.Adslocations == null)
             {
-                return NotFound();
+                
             }
             var adslocation = await _context.Adslocations.FindAsync(id);
             if (adslocation == null)
