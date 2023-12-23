@@ -5,11 +5,15 @@ using System.Collections.Generic;
 
 namespace GovBE.Models;
 
-public partial class Adslocationpicture
+public partial class Adslocationimage
 {
-    public int Id { get; set; }
+    public int AdsLocationImageId { get; set; }
 
-    public byte[] HinhAnh { get; set; }
+    public byte[] Image { get; set; }
 
     public int? AdsLocationId { get; set; }
+
+    public DateTime? CreateOnUtc { get; set; }
+
+    public int? CreateUserId { get; set; }
 }

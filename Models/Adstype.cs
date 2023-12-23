@@ -5,15 +5,21 @@ using System.Collections.Generic;
 
 namespace GovBE.Models;
 
-public partial class Reportwarningurl
+public partial class Adstype
 {
-    public int ReportWarningImageId { get; set; }
+    public int AdsTypeId { get; set; }
 
-    public int? ReportWarningId { get; set; }
+    public string Name { get; set; }
 
-    public string Url { get; set; }
+    public string DisplayName { get; set; }
 
     public DateTime? CreateOnUtc { get; set; }
 
+    public DateTime? LastUpdateOnUtc { get; set; }
+
     public int? CreateUserId { get; set; }
+
+    public int? UpdateUserId { get; set; }
+
+    public bool IsActive { get; set; }
 }

@@ -1,10 +1,10 @@
-﻿namespace GovBE.Commons
-{
-    public enum AdsStatus
-    {
-        HetHan,
-        ConHan,
-        ViPham,
-        ChuaXetDuyet
-    }
-}
+﻿//namespace GovBE.Commons
+//{
+//    public enum AdsStatus
+//    {
+//        HetHan=0,
+//        ConHan,
+//        ViPham,
+//        ChuaXetDuyet
+//    }
+//}

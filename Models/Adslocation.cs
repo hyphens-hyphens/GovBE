@@ -7,7 +7,7 @@ namespace GovBE.Models;
 
 public partial class Adslocation
 {
-    public int Id { get; set; }
+    public int AdsLocationId { get; set; }
 
     public string AdsAddress { get; set; }
 
@@ -19,15 +19,15 @@ public partial class Adslocation
 
     public int? Quantity { get; set; }
 
-    public decimal? Latitute { get; set; }
+    public int? TypeId { get; set; }
 
-    public decimal? Longtitute { get; set; }
-
-    public int? TypeAds { get; set; }
-
-    public int? Status { get; set; }
+    public string AdsStatus { get; set; }
 
     public DateTime? EndDate { get; set; }
+
+    public decimal? Latitude { get; set; }
+
+    public decimal? Longtitude { get; set; }
 
     public DateTime? CreateOnUtc { get; set; }
 
