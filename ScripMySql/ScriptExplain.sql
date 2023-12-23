@@ -2,27 +2,27 @@
 #database GovBE
 
 Create table AdsLocation (
-	Id INT AUTO_INCREMENT PRIMARY KEY,
-    AdsAddress char(200),
+	--Id INT AUTO_INCREMENT PRIMARY KEY,
+ --   AdsAddress char(200),
     
-    Width float,
-    Height float,
-    SizeUnit char(20),
-    Quantity int,
-    Latitute decimal,
-    Longtitute decimal,
+ --   Width float,
+ --   Height float,
+ --   SizeUnit char(20),
+ --   Quantity int,
+ --   Latitute decimal,
+ --   Longtitute decimal,
     
-    TypeAds int, /* use enum TypeAds.cs*/
-    Status int,/* use enum AdsLocationStatus.cs*/
+ --   TypeAds int, /* use enum TypeAds.cs*/
+ --   Status int,/* use enum AdsLocationStatus.cs*/
     
-    EndDate datetime,
+ --   EndDate datetime,
     
-    CreateOnUtc DateTime,
-    LastUpdateOnUtc DateTime,
-    CreateUserId int,
-    UpdateUserId int,
-    
-    IsActive bit not null default 1
+ --   CreateOnUtc DateTime,
+ --   LastUpdateOnUtc DateTime,
+ --   CreateUserId int,
+ --   UpdateUserId int,
+ --   IsActive bit not null default 1
+
 );
 
 /*Quảng cáo trên điểm quảng cáo*/
@@ -60,16 +60,17 @@ Create Table AdsNew(
     ProcessingStatus INT, /*Use enum ProcessingStatus.cs 
     Thông tin về việc điểm đặt đã được quy hoạch hay chưa?*/ 
     
+    CreateUserId int null,
+
     CreateOnUtc DateTime,
     LastUpdateOnUtc DateTime,
-    CreateUserId int null,
     UpdateUserId int null,
     
     IsActive bit not null default 1
 );
 
 /*Hình ảnh của quảng cáo*/
-Create Table AdsNewPicture
+Create Table AdsNewImage
 (
 	Id INT AUTO_INCREMENT PRIMARY KEY,
 	HinhAnh MEDIUMBLOB,
@@ -77,7 +78,7 @@ Create Table AdsNewPicture
     #FOREIGN KEY (AdsNewId) REFERENCES AdsNew(Id)
 );
 /*Hình ảnh của điểm quảng cáo*/
-Create Table AdsLocationPicture(
+Create Table AdsLocationImage(
 
 	Id INT AUTO_INCREMENT PRIMARY KEY,
 	HinhAnh MEDIUMBLOB,
@@ -129,6 +130,17 @@ Create Table AdsLocationUpdate (
    #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(Id)
 );
 
+CREATE TABLE AdsStatus(
+
+)
+
+CREATE TABLE AdsType(
+
+)
+CREATE TABLE WarmType(
+
+)
+
 
 -- Inserting sample data into AdsLocation table
 INSERT INTO AdsLocation (AdsAddress, Width, Height, SizeUnit, Quantity, Latitute, Longtitute, TypeAds, Status, EndDate, CreateOnUtc, LastUpdateOnUtc, CreateUserId, UpdateUserId)
@@ -141,14 +153,14 @@ INSERT INTO AdsNew (AdsLocationId, Comment, Width, Height, SizeUnit, Latitute, L
 VALUES 
     (1, 'New ad', 5.0, 3.0, 'inches', 40.7128, -74.0060, 'ABC Company', '123 Main St', 1, 1, 1, 'Description of ad', '2023-01-01', '2023-12-31', 'XYZ Corp', 'xyz@example.com', '789 Elm St', '123-456-7890', 'Los Angeles', 'Downtown', 'Central', 1, '2023-12-22', '2023-12-22');
 
--- Inserting sample data into AdsNewPicture table
-INSERT INTO AdsNewPicture (HinhAnh, AdsNewId)
+-- Inserting sample data into AdsNewImage table
+INSERT INTO AdsNewImage (HinhAnh, AdsNewId)
 VALUES 
     (LOAD_FILE('/path/to/image1.jpg'), 1),
     (LOAD_FILE('/path/to/image2.jpg'), 1);
 
--- Inserting sample data into AdsLocationPicture table
-INSERT INTO AdsLocationPicture (HinhAnh, AdsLocationId)
+-- Inserting sample data into AdsLocationImage table
+INSERT INTO AdsLocationImage (HinhAnh, AdsLocationId)
 VALUES 
     (LOAD_FILE('/path/to/image3.jpg'), 1),
     (LOAD_FILE('/path/to/image4.jpg'), 2);
