@@ -36,6 +36,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "adsnewupdate",
+         "ObjectType": 0
+      },
+      {
          "Name": "adsprocessing",
          "ObjectType": 0
       },

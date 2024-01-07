@@ -1,3 +1,5 @@
+/* Điểm quảng cáo */
+#database GovBE
 
 Create table AdsLocation (
 	AdsLocationId INT AUTO_INCREMENT PRIMARY KEY,
@@ -9,8 +11,8 @@ Create table AdsLocation (
     TypeID int, /* use enum typeads.cs*/
     AdsStatus char(30),/* use enum adslocationstatus.cs*/
     EndDate datetime,
-    Latitude decimal,
-    Longtitude decimal,
+    Latitude decimal(18,15),
+    Longtitude decimal(18,15),
     
 
     
@@ -26,6 +28,7 @@ Create table AdsLocation (
 Create Table AdsNew(
 	AdsNewId INT AUTO_INCREMENT PRIMARY KEY,
     AdsLocationId int,
+    AdsTypeId int,
     StartDate DateTime,
     EndDate DateTime,
     Comment char(200),
@@ -40,8 +43,8 @@ Create Table AdsNew(
     Height float,
     SizeUnit char(20),
     AdsAddress char(200),
-    Latitude decimal,
-    Longtitude decimal,
+    Latitude decimal(18,15),
+    Longtitude decimal(18,15),
     ProcessingStatus char(30), /*Use enum ProcessingStatus.cs 
     Thông tin về việc điểm đặt đã được quy hoạch hay chưa?*/ 
 
@@ -63,6 +66,7 @@ Create Table ReportWarning (
     Email char(100),
     PhoneNumber char(20),
     Comment char(200),
+    AdsNewId int,
     AdsLocationId int,
     ReportWarningStatus char(30), /*Use enum ReportWarningWarning.cs*/
     
@@ -72,7 +76,8 @@ Create Table ReportWarning (
     UpdateUserId int null,
     IsActive bit not null default 1
     
-    #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(AdsLocationId)
+    #FOREIGN KEY (AdsNewId) REFERENCES AdsNew(AdsNewId)
+     #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(AdsLocationId)
 );
 
 /*Hình ảnh của quảng cáo*/
@@ -123,6 +128,21 @@ Create Table AdsLocationUpdate (
     UpdateUserId int null,
     IsActive bit not null default 1
    #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(AdsLocationId)
+);
+
+Create Table AdsNewUpdate (
+	AdsNewUpdateId INT AUTO_INCREMENT PRIMARY KEY,
+    AdsNewnId int,
+    Date datetime,
+    Comment char(200),
+    StatusEdit char(30),
+    
+    CreateOnUtc DateTime,
+    LastUpdateOnUtc DateTime,
+    CreateUserId int null,
+    UpdateUserId int null,
+    IsActive bit not null default 1
+   #FOREIGN KEY (AdsNewId) REFERENCES AdsNew(AdsNewId)
 );
 
 CREATE TABLE AdsProcessing(
@@ -209,28 +229,35 @@ INSERT INTO AdsStatus (Name, DisplayName, CreateOnUtc, LastUpdateOnUtc, IsActive
 -- AdsLocation
 INSERT INTO AdsLocation (AdsAddress, Width, Height, SizeUnit, Quantity, TypeID, AdsStatus, EndDate, Latitude, Longtitude, CreateOnUtc, LastUpdateOnUtc, IsActive) VALUES
 ('123 Lê Lợi, Quận 1', 5.5, 3.2, 'meters', 1, 1, 'Hết hạn', '2024-01-31 23:59:59', 10.762622, 106.660172, NOW(), NOW(), 1),
-('456 Nguyễn Huệ, Quận 1', 6.5, 3.5, 'meters', 1, 2, 'còn hạn', '2024-02-28 23:59:59', 10.787755, 106.749860, NOW(), NOW(), 1),
-('789 Phan Xích Long, Quận Phú Nhuận', 7.5, 3.8, 'meters', 1, 3, 'chưa xét duyệt', '2024-03-31 23:59:59', 10.784708, 106.679491, NOW(), NOW(), 1),
-('101 Trần Hưng Đạo, Quận 5', 8.5, 4.1, 'meters', 1, 4, 'vi phạm', '2024-04-30 23:59:59', 10.759550, 106.704109, NOW(), NOW(), 1),
+('456 Nguyễn Huệ, Quận 1', 6.5, 3.5, 'meters', 1, 2, 'Còn hạn', '2024-02-28 23:59:59', 10.787755, 106.749860, NOW(), NOW(), 1),
+('789 Phan Xích Long, Quận Phú Nhuận', 7.5, 3.8, 'meters', 1, 3, 'Chưa xét duyệt', '2024-03-31 23:59:59', 10.784708, 106.679491, NOW(), NOW(), 1),
+('101 Trần Hưng Đạo, Quận 5', 8.5, 4.1, 'meters', 1, 4, 'Vi phạm', '2024-04-30 23:59:59', 10.759550, 106.704109, NOW(), NOW(), 1),
 ('202 Cộng Hòa, Quận Tân Bình', 9.5, 4.4, 'meters', 1, 5, 'Hết hạn', '2024-05-31 23:59:59', 10.754308, 106.670436, NOW(), NOW(), 1),
-('303 Hoàng Văn Thụ, Quận Tân Bình', 10.5, 4.7, 'meters', 1, 6, 'còn hạn', '2024-06-30 23:59:59', 10.749800, 106.634808, NOW(), NOW(), 1),
-('404 Bà Hạt, Quận 10', 11.5, 5.0, 'meters', 1, 7, 'chưa xét duyệt', '2024-07-31 23:59:59', 10.729381, 106.721877, NOW(), NOW(), 1),
-('505 Võ Văn Tần, Quận 3', 12.5, 5.3, 'meters', 1, 8, 'vi phạm', '2024-08-31 23:59:59', 10.747119, 106.663315, NOW(), NOW(), 1),
+('303 Hoàng Văn Thụ, Quận Tân Bình', 10.5, 4.7, 'meters', 1, 6, 'Còn hạn', '2024-06-30 23:59:59', 10.749800, 106.634808, NOW(), NOW(), 1),
+('404 Bà Hạt, Quận 10', 11.5, 5.0, 'meters', 1, 7, 'Chưa xét duyệt', '2024-07-31 23:59:59', 10.729381, 106.721877, NOW(), NOW(), 1),
+('505 Võ Văn Tần, Quận 3', 12.5, 5.3, 'meters', 1, 8, 'Vi phạm', '2024-08-31 23:59:59', 10.747119, 106.663315, NOW(), NOW(), 1),
 ('606 Hai Bà Trưng, Quận 1', 13.5, 5.6, 'meters', 1, 9, 'Hết hạn', '2024-09-30 23:59:59', 10.819665, 106.802656, NOW(), NOW(), 1),
-('707 Nguyễn Văn Trỗi, Quận Phú Nhuận', 14.5, 5.9, 'meters', 1, 10, 'còn hạn', '2024-10-31 23:59:59', 10.773389, 106.667183, NOW(), NOW(), 1);
+('707 Nguyễn Văn Trỗi, Quận Phú Nhuận', 14.5, 5.9, 'meters', 1, 10, 'Còn hạn', '2024-10-31 23:59:59', 10.773389, 106.667183, NOW(), NOW(), 1);
 
 
 
 -- AdsNew
 INSERT INTO AdsNew (AdsLocationId, StartDate, EndDate, Comment, CompanyInfo, Email, CompanyAddress, PhoneNumber, City, District, Ward, Width, Height, SizeUnit, AdsAddress, Latitude, Longtitude, ProcessingStatus, CreateOnUtc, LastUpdateOnUtc, CreateUserId, UpdateUserId, IsActive) VALUES
-(1, '2023-12-24 09:00:00', '2023-12-31 18:00:00', 'Khuyến mãi cuối năm', 'Công ty A', 'info@a-company.com', '123 Lê Lợi, Quận 1', '0123456789', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Phường Bến Nghé', 5.5, 3.2, 'meters', '123 Lê Lợi, Quận 1', 10.762622, 106.660172, 'Chưa xử lý', NOW(), NOW(), 1, 1, 1),
-(2, '2023-12-25 10:00:00', '2023-12-31 20:00:00', 'Mừng Giáng Sinh', 'Công ty B', 'contact@b-company.com', '456 Nguyễn Huệ, Quận 1', '0234567890', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Phường Phạm Ngũ Lão', 6.5, 3.5, 'meters', '456 Nguyễn Huệ, Quận 1', 10.787755, 106.749860, 'Đang xử lý', NOW(), NOW(), 2, 2, 1),
-(3, '2023-12-26 11:00:00', '2023-12-31 21:00:00', 'Khuyến mãi Tết', 'Công ty C', 'support@c-company.com', '789 Phan Xích Long, Quận Phú Nhuận', '0345678901', 'Thành phố Hồ Chí Minh', 'Quận Phú Nhuận', 'Phường 7', 7.5, 3.8, 'meters', '789 Phan Xích Long, Quận Phú Nhuận', 10.784708, 106.679491, 'Chưa xử lý', NOW(), NOW(), 3, 3, 1),
-(4, '2023-12-27 12:00:00', '2023-12-31 22:00:00', 'Mua 1 tặng 1', 'Công ty D', 'sales@d-company.com', '101 Trần Hưng Đạo, Quận 5', '0456789012', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 10', 8.5, 4.1, 'meters', '101 Trần Hưng Đạo, Quận 5', 10.759550, 106.704109, 'Đang xử lý', NOW(), NOW(), 4, 4, 1),
-(5, '2023-12-28 13:00:00', '2023-12-31 23:00:00', 'Giảm giá 50%', 'Công ty E', 'info@e-company.com', '202 Cộng Hòa, Quận Tân Bình', '0567890123', 'Thành phố Hồ Chí Minh', 'Quận Tân Bình', 'Phường 12', 9.5, 4.4, 'meters', '202 Cộng Hòa, Quận Tân Bình', 10.754308, 106.670436, 'Chưa xử lý', NOW(), NOW(), 5, 5, 1),
-(6, '2023-12-29 14:00:00', '2023-12-31 23:59:59', 'Quảng cáo mới', 'Công ty F', 'contact@f-company.com', '303 Hoàng Văn Thụ, Quận Tân Bình', '0678901234', 'Thành phố Hồ Chí Minh', 'Quận Tân Bình', 'Phường 14', 10.5, 4.7, 'meters', '303 Hoàng Văn Thụ, Quận Tân Bình', 10.749800, 106.634808, 'Đang xử lý', NOW(), NOW(), 6, 6, 1),
-(7, '2023-12-30 15:00:00', '2023-12-31 23:59:59', 'Tặng voucher', 'Công ty G', 'support@g-company.com', '404 Bà Hạt, Quận 10', '0789012345', 'Thành phố Hồ Chí Minh', 'Quận 10', 'Phường 3', 11.5, 5.0, 'meters', '404 Bà Hạt, Quận 10', 10.729381, 106.721877, 'Chưa xử lý', NOW(), NOW(), 7, 7, 1),
-(8, '2023-12-31 16:00:00', '2023-12-31 23:59:59', 'Năm mới, sản phẩm mới', 'Công ty H', 'sales@h-company.com', '505 Võ Văn Tần, Quận 3', '0890123456', 'Thành phố Hồ Chí Minh', 'Quận 3', 'Phường 6', 12.5, 5.3, 'meters', '505 Võ Văn Tần, Quận 3', 10.747119, 106.663315, 'Đang xử lý', NOW(), NOW(), 8, 8, 1);
+(1, '2024-01-01 09:00:00', '2024-01-07 18:00:00', 'Khuyến mãi', 'Công ty A', 'info@a-company.com', '242 Đ. Trần Bình Trọng, Phường 4, Quận 5', '0123456789', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 4', 5.5, 3.2, 'meters', '242 Đ. Trần Bình Trọng, Phường 4, Quận 5', 10.762046669782544, 106.67950161327072, 'Đang xử lý', NOW(), NOW(), 1, 1, 1),
+(2, '2024-01-02 10:00:00', '2024-01-07 20:00:00', 'Mừng năm mới', 'Công ty B', 'contact@b-company.com', '273B Đ. An Dương Vương, Phường 3, Quận 5', '0234567890', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 3', 6.5, 3.5, 'meters', '273B Đ. An Dương Vương, Phường 3, Quận 5', 10.760621968352499, 106.6815109716679, 'Đang xử lý', NOW(), NOW(), 2, 2, 1),
+(3, '2024-01-03 11:00:00', '2024-01-07 21:00:00', 'Khuyến mãi Tết', 'Công ty C', 'support@c-company.com', '235 Đ. Nguyễn Văn Cừ, P. Phú Thuận, Quận 1', '0345678901', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Phú Thuận', 7.5, 3.8, 'meters', '235 Đ. Nguyễn Văn Cừ, P. Phú Thuận, Quận 1', 10.761561048869305, 106.68344551197659, 'Đã xử lý', NOW(), NOW(), 3, 3, 1),
+(4, '2024-01-04 12:00:00', '2024-01-07 22:00:00', 'Mua 1 tặng 1', 'Công ty D', 'sales@d-company.com', '214/B2 Đ. Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1', '0456789012', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Nguyễn Cư Trinh', 8.5, 4.1, 'meters', '214/B2 Đ. Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 1', 10.76281315162682, 106.68637387489653, 'Đang xử lý', NOW(), NOW(), 4, 4, 1),
+(5, '2024-01-05 13:00:00', '2024-01-07 23:00:00', 'Giảm giá 50%', 'Công ty E', 'info@e-company.com', '197A Đ. Nguyễn Trãi, P, Quận 1', '0567890123', 'Thành phố Hồ Chí Minh', 'Quận 1', '', 9.5, 4.4, 'meters', '197A Đ. Nguyễn Trãi, P, Quận 1', 10.766479994097926, 106.68817185944064, 'Đã xử lý', NOW(), NOW(), 5, 5, 1),
+(6, '2024-01-06 14:00:00', '2024-01-07 23:59:59', 'Quảng cáo mới', 'Công ty F', 'contact@f-company.com', '304 Đ. Cao Thắng, Phường 12, Quận 10', '0678901234', 'Thành phố Hồ Chí Minh', 'Quận 10', 'Phường 12', 10.5, 4.7, 'meters', '304 Đ. Cao Thắng, Phường 12, Quận 10', 10.775205790715054, 106.67484357705126, 'Đang xử lý', NOW(), NOW(), 6, 6, 1),
+(7, '2024-01-07 15:00:00', '2024-01-07 23:59:59', 'Tặng voucher', 'Công ty G', 'support@g-company.com', '2 Đ. Dương Quang Trung, Phường 12, Quận 10', '0789012345', 'Thành phố Hồ Chí Minh', 'Quận 10', 'Phường 12', 11.5, 5.0, 'meters', '2 Đ. Dương Quang Trung, Phường 12, Quận 10', 10.774046110282995, 106.66574536429205, 'Đã xử lý', NOW(), NOW(), 7, 7, 1),
+(8, '2024-01-08 16:00:00', '2024-01-07 23:59:59', 'Năm mới, sản phẩm mới', 'Công ty H', 'sales@h-company.com', '76 Bùi Hữu Nghĩa, Phường 7, Quận 5', '0890123456', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 7', 12.5, 5.3, 'meters', '76 Bùi Hữu Nghĩa, Phường 7, Quận 5', 10.7540429953913, 106.67475885742401, 'Đang xử lý', NOW(), NOW(), 8, 8, 1),
+(9, '2024-01-09 17:00:00', '2024-01-07 23:59:59', 'Tết này ưu đãi', 'Công ty I', 'info@i-company.com', '233 Đ. Lê Hồng Phong, Phường 4, Quận 5', '0901234567', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 4', 13.5, 5.6, 'meters', '233 Đ. Lê Hồng Phong, Phường 4, Quận 5', 10.759890103738831, 106.67702080885093, 'Đã xử lý', NOW(), NOW(), 9, 9, 1),
+(10, '2024-01-10 18:00:00', '2024-01-07 23:59:59', 'Sản phẩm mới ra mắt', 'Công ty J', 'contact@j-company.com', '32 Đ. Nguyễn Văn Cừ, Cầu Kho, Quận 1', '0912345678', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Cầu Kho', 14.5, 5.9, 'meters', '32 Đ. Nguyễn Văn Cừ, Cầu Kho, Quận 1', 10.75576908422589, 106.68580027673217, 'Đang xử lý', NOW(), NOW(), 10, 10, 1),
+(11, '2024-01-11 19:00:00', '2024-01-07 23:59:59', 'Giảm giá hấp dẫn', 'Công ty K', 'support@k-company.com', '546 Đ. Trần Hưng Đạo, Phường 2, Quận 5', '0923456789', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 2', 15.5, 6.2, 'meters', '546 Đ. Trần Hưng Đạo, Phường 2, Quận 5', 10.755558277194233, 106.68092402089563, 'Đã xử lý', NOW(), NOW(), 11, 11, 1),
+(12, '2024-01-12 20:00:00', '2024-01-07 23:59:59', 'Khuyến mãi lớn', 'Công ty L', 'sales@l-company.com', '452 Đ. Nguyễn Thị Minh Khai, st, Quận 3', '0934567890', 'Thành phố Hồ Chí Minh', 'Quận 3', '', 16.5, 6.5, 'meters', '452 Đ. Nguyễn Thị Minh Khai, st, Quận 3', 10.768716283821178, 106.68449778987492, 'Đang xử lý', NOW(), NOW(), 12, 12, 1),
+(13, '2024-01-13 21:00:00', '2024-01-07 23:59:59', 'Mua sắm tiết kiệm', 'Công ty M', 'info@m-company.com', '538 Đ. Nguyễn Thị Minh Khai, P.2, Quận 3', '0945678901', 'Thành phố Hồ Chí Minh', 'Quận 3', 'P.2', 17.5, 6.8, 'meters', '538 Đ. Nguyễn Thị Minh Khai, P.2, Quận 3', 10.765635860486444, 106.68139752707582, 'Đã xử lý', NOW(), NOW(), 13, 13, 1),
+(14, '2024-01-14 22:00:00', '2024-01-07 23:59:59', 'Tận hưởng mùa xuân', 'Công ty N', 'contact@n-company.com', '1 Đ. Nguyễn Trãi, Phường 2, Quận 5', '0956789012', 'Thành phố Hồ Chí Minh', 'Quận 5', 'Phường 2', 18.5, 7.1, 'meters', '1 Đ. Nguyễn Trãi, Phường 2, Quận 5', 10.75955663068999, 106.68372734359743, 'Đang xử lý', NOW(), NOW(), 14, 14, 1),
+(15, '2024-01-15 23:00:00', '2024-01-07 23:59:59', 'Mua sắm tại đây', 'Công ty O', 'sales@o-company.com', '180 Đ. Trần Hưng Đạo, Phường Nguyễn Cư Trinh, Quận 1', '0967890123', 'Thành phố Hồ Chí Minh', 'Quận 1', 'Nguyễn Cư Trinh', 19.5, 7.4, 'meters', '180 Đ. Trần Hưng Đạo, Phường Nguyễn Cư Trinh, Quận 1', 10.763095182477192, 106.69073724537003, 'Đã xử lý', NOW(), NOW(), 15, 15, 1);
 
 -- AdsProcessing
 INSERT INTO AdsProcessing (AdsNewId, ProcessingStatus, Comment, CreateOnUtc, LastUpdateOnUtc, CreateUserId, UpdateUserId, IsActive) VALUES
@@ -257,7 +284,6 @@ INSERT INTO AdsLocationUpdate (AdsLocationId, Date, Comment, StatusEdit, CreateO
 (8, '2023-12-27 16:00:00', 'Kiểm tra địa chỉ', 'Chưa xử lý', NOW(), NOW(), 8, 9, 1),
 (9, '2023-12-28 17:00:00', 'Chỉnh sửa kích thước', 'Đang xử lý', NOW(), NOW(), 9, 10, 1),
 (10, '2023-12-29 18:00:00', 'Thêm thông tin liên hệ', 'Chưa xử lý', NOW(), NOW(), 10, 11, 1);
-
 
 -- ReportWarning
 INSERT INTO ReportWarning (WarningType, FullName, Email, PhoneNumber, Comment, AdsLocationId, ReportWarningStatus, CreateUserId, CreateOnUtc, LastUpdateOnUtc, UpdateUserId, IsActive) VALUES
