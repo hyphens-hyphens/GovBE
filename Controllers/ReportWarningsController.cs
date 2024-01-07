@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovBE.Models;
 using GovBE.Commons;
+using System.Numerics;
 
 namespace GovBE.Controllers
 {
@@ -15,10 +16,11 @@ namespace GovBE.Controllers
     public class ReportWarningsController : ControllerBase
     {
         private readonly GovBE_DatabaseContext _context;
-
-        public ReportWarningsController(GovBE_DatabaseContext context)
+        private readonly ILogger<ReportWarningsController> _logger;
+        public ReportWarningsController(GovBE_DatabaseContext context, ILogger<ReportWarningsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         /// <summary>
         /// Lấy thông tin bảng reportwarning
@@ -28,6 +30,7 @@ namespace GovBE.Controllers
         [HttpGet]
         public async Task<BaseResponse<List<Reportwarning>>> GetReportwarnings()
         {
+            _logger.LogInformation("Call ReportWarningsController.GetReportwarnings");
             if (_context.Reportwarnings == null)
             {
                 return new()
