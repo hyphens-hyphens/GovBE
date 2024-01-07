@@ -20,6 +20,11 @@ namespace GovBE.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Lấy danh sách các quận
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Districts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<District>>> GetDistricts()
@@ -31,6 +36,11 @@ namespace GovBE.Controllers
             return await _context.Districts.ToListAsync();
         }
 
+        /// <summary>
+        ///    Lấy thông tin quận theo id
+        /// </summary>
+        /// <param name="id">id quận cần tìm kiếm</param>
+        /// <returns></returns>
         // GET: api/Districts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<District>> GetDistrict(int id)
@@ -48,7 +58,12 @@ namespace GovBE.Controllers
 
             return district;
         }
-
+        /// <summary>
+        ///  Chỉnh sửa thông tin quận theo id
+        /// </summary>
+        /// <param name="id">id quận cần chỉnh sửa</param>
+        /// <param name="district">Thông tin quận cần chỉnh sửa</param>
+        /// <returns></returns>
         // PUT: api/Districts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -79,7 +94,11 @@ namespace GovBE.Controllers
 
             return NoContent();
         }
-
+        /// <summary>
+        /// Thêm 1 quận mới
+        /// </summary>
+        /// <param name="district">Thông tin quận cần thêm mới</param>
+        /// <returns></returns>
         // POST: api/Districts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -94,7 +113,11 @@ namespace GovBE.Controllers
 
             return CreatedAtAction("GetDistrict", new { id = district.DistrictId }, district);
         }
-
+        /// <summary>
+        /// Xóa một quận theo id
+        /// </summary>
+        /// <param name="id">id quận cần xóa</param>
+        /// <returns></returns>
         // DELETE: api/Districts/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDistrict(int id)
