@@ -23,6 +23,8 @@ public partial class GovBE_DatabaseContext : DbContext
 
     public virtual DbSet<Adsnewimage> Adsnewimages { get; set; }
 
+    public virtual DbSet<Adsnewupdate> Adsnewupdates { get; set; }
+
     public virtual DbSet<Adsprocessing> Adsprocessings { get; set; }
 
     public virtual DbSet<Adsstatus> Adsstatuses { get; set; }
@@ -59,8 +61,8 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Latitude).HasPrecision(10);
-            entity.Property(e => e.Longtitude).HasPrecision(10);
+            entity.Property(e => e.Latitude).HasPrecision(18, 15);
+            entity.Property(e => e.Longtitude).HasPrecision(18, 15);
             entity.Property(e => e.SizeUnit)
                 .HasMaxLength(20)
                 .IsFixedLength();
@@ -130,8 +132,8 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
-            entity.Property(e => e.Latitude).HasPrecision(10);
-            entity.Property(e => e.Longtitude).HasPrecision(10);
+            entity.Property(e => e.Latitude).HasPrecision(18, 15);
+            entity.Property(e => e.Longtitude).HasPrecision(18, 15);
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .IsFixedLength();
@@ -156,6 +158,26 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.Property(e => e.AdsNewId).HasColumnName("AdsNewID");
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.Image).HasColumnType("mediumblob");
+        });
+
+        modelBuilder.Entity<Adsnewupdate>(entity =>
+        {
+            entity.HasKey(e => e.AdsNewUpdateId).HasName("PRIMARY");
+
+            entity.ToTable("adsnewupdate");
+
+            entity.Property(e => e.Comment)
+                .HasMaxLength(200)
+                .IsFixedLength();
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValueSql("b'1'")
+                .HasColumnType("bit(1)");
+            entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.StatusEdit)
+                .HasMaxLength(30)
+                .IsFixedLength();
         });
 
         modelBuilder.Entity<Adsprocessing>(entity =>

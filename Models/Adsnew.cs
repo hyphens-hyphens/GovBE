@@ -11,6 +11,8 @@ public partial class Adsnew
 
     public int? AdsLocationId { get; set; }
 
+    public int? AdsTypeId { get; set; }
+
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }

@@ -19,6 +19,8 @@ public partial class Reportwarning
 
     public string Comment { get; set; }
 
+    public int? AdsNewId { get; set; }
+
     public int? AdsLocationId { get; set; }
 
     public string ReportWarningStatus { get; set; }
