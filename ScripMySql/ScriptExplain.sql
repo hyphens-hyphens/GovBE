@@ -155,7 +155,9 @@ Create Table ReportWarning (
     CreateOnUtc DateTime,
     LastUpdateOnUtc DateTime,
     UpdateUserId int null,
-    IsActive bit not null default 1
+    IsActive bit not null default 1,
+    Latitude decimal(18,15),
+    Longtitude decimal(18,15)
     
     #FOREIGN KEY (AdsNewId) REFERENCES AdsNew(AdsNewId)
      #FOREIGN KEY (AdsLocationId) REFERENCES AdsLocation(AdsLocationId)
@@ -366,15 +368,16 @@ INSERT INTO AdsLocationUpdate (AdsLocationId, Date, Comment, StatusEdit, CreateO
 (9, '2023-12-28 17:00:00', 'Chỉnh sửa kích thước', 'Đang xử lý', NOW(), NOW(), 9, 10, 1),
 (10, '2023-12-29 18:00:00', 'Thêm thông tin liên hệ', 'Chưa xử lý', NOW(), NOW(), 10, 11, 1);
 
+
 -- ReportWarning
-INSERT INTO ReportWarning (WarningType, FullName, Email, PhoneNumber, Comment, AdsLocationId, ReportWarningStatus, CreateUserId, CreateOnUtc, LastUpdateOnUtc, UpdateUserId, IsActive) VALUES
-('Tố giác sai phạm', 'Nguyễn Văn A', 'nguyenvana@email.com', '0123456789', 'Quảng cáo vi phạm nội dung', 1, 'Đang xử lý', 1, NOW(), NOW(), 2, 1),
-('Đóng góp ý kiến', 'Trần Thị B', 'tranthib@email.com', '0234567890', 'Mong muốn quảng cáo rõ ràng hơn', 2, 'Đã xử lý', 2, NOW(), NOW(), 3, 1),
-('Đăng ký nội dung', 'Lê Văn C', 'levanc@email.com', '0345678901', 'Muốn đăng ký nội dung quảng cáo mới', 3, 'Chưa xử lý', 3, NOW(), NOW(), 4, 1),
-('Giải đáp thắc mắc', 'Phạm Thị D', 'phamthid@email.com', '0456789012', 'Cần thông tin chi tiết về quảng cáo', 4, 'Đang xử lý', 4, NOW(), NOW(), 5, 1),
-('Tố giác sai phạm', 'Hoàng Văn E', 'hoangvane@email.com', '0567890123', 'Quảng cáo không phù hợp', 5, 'Chưa xử lý', 5, NOW(), NOW(), 6, 1),
-('Đóng góp ý kiến', 'Ngọc Anh F', 'ngocanhf@email.com', '0678901234', 'Quảng cáo nên rõ ràng hơn', 6, 'Đã xử lý', 6, NOW(), NOW(), 7, 1),
-('Đăng ký nội dung', 'Tuấn Anh G', 'tuananhg@email.com', '0789012345', 'Muốn đăng quảng cáo sản phẩm mới', 7, 'Chưa xử lý', 7, NOW(), NOW(), 8, 1),
-('Giải đáp thắc mắc', 'Hà Minh H', 'haminhh@email.com', '0890123456', 'Cần tư vấn về chất lượng quảng cáo', 8, 'Đang xử lý', 8, NOW(), NOW(), 9, 1),
-('Tố giác sai phạm', 'Linh Chi I', 'linhchii@email.com', '0901234567', 'Quảng cáo vi phạm quy định', 9, 'Đã xử lý', 9, NOW(), NOW(), 10, 1),
-('Đóng góp ý kiến', 'Đức Hoàng J', 'duchoangj@email.com', '0912345678', 'Nội dung quảng cáo không chính xác', 10, 'Chưa xử lý', 10, NOW(), NOW(), 11, 1);
+INSERT INTO ReportWarning (WarningType, FullName, Email, PhoneNumber, Comment, AdsLocationId, ReportWarningStatus, CreateUserId, CreateOnUtc, LastUpdateOnUtc, UpdateUserId, IsActive,Latitude,Longtitude) VALUES
+('Tố giác sai phạm', 'Nguyễn Văn A', 'nguyenvana@email.com', '0123456789', 'Quảng cáo vi phạm nội dung', 1, 'Đang xử lý', 1, NOW(), NOW(), 2, 1, 10.762046669782544, 106.67950161327072),
+('Đóng góp ý kiến', 'Trần Thị B', 'tranthib@email.com', '0234567890', 'Mong muốn quảng cáo rõ ràng hơn', 2, 'Đã xử lý', 2, NOW(), NOW(), 3, 1, 10.760621968352499, 106.6815109716679),
+('Đăng ký nội dung', 'Lê Văn C', 'levanc@email.com', '0345678901', 'Muốn đăng ký nội dung quảng cáo mới', 3, 'Chưa xử lý', 3, NOW(), NOW(), 4, 1, 10.761561048869305, 106.68344551197659),
+('Giải đáp thắc mắc', 'Phạm Thị D', 'phamthid@email.com', '0456789012', 'Cần thông tin chi tiết về quảng cáo', 4, 'Đang xử lý', 4, NOW(), NOW(), 5, 1, 10.76281315162682, 106.68637387489653),
+('Tố giác sai phạm', 'Hoàng Văn E', 'hoangvane@email.com', '0567890123', 'Quảng cáo không phù hợp', 5, 'Chưa xử lý', 5, NOW(), NOW(), 6, 1, 10.766479994097926, 106.68817185944064),
+('Đóng góp ý kiến', 'Ngọc Anh F', 'ngocanhf@email.com', '0678901234', 'Quảng cáo nên rõ ràng hơn', 6, 'Đã xử lý', 6, NOW(), NOW(), 7, 1, 10.775205790715054, 106.67484357705126),
+('Đăng ký nội dung', 'Tuấn Anh G', 'tuananhg@email.com', '0789012345', 'Muốn đăng quảng cáo sản phẩm mới', 7, 'Chưa xử lý', 7, NOW(), NOW(), 8, 1, 10.774046110282995, 106.66574536429205),
+('Giải đáp thắc mắc', 'Hà Minh H', 'haminhh@email.com', '0890123456', 'Cần tư vấn về chất lượng quảng cáo', 8, 'Đang xử lý', 8, NOW(), NOW(), 9, 1, 10.7540429953913, 106.67475885742401),
+('Tố giác sai phạm', 'Linh Chi I', 'linhchii@email.com', '0901234567', 'Quảng cáo vi phạm quy định', 9, 'Đã xử lý', 9, NOW(), NOW(), 10, 1, 10.759890103738831, 106.67702080885093),
+('Đóng góp ý kiến', 'Đức Hoàng J', 'duchoangj@email.com', '0912345678', 'Nội dung quảng cáo không chính xác', 10, 'Chưa xử lý', 10, NOW(), NOW(), 11, 1, 10.765635860486444, 106.68139752707582);
