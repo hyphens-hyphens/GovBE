@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovBE.Models;
+using GovBE.Commons;
 
 namespace GovBE.Controllers
 {
@@ -27,13 +28,25 @@ namespace GovBE.Controllers
         /// <returns></returns>
         // GET: api/Districts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<District>>> GetDistricts()
+        public async Task<BaseResponse<List<District>>> GetDistricts()
         {
-          if (_context.Districts == null)
-          {
-              return NotFound();
-          }
-            return await _context.Districts.ToListAsync();
+            if (_context.Districts == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Districts not found"
+                };
+            }
+            var list = await _context.Districts.ToListAsync();
+            return new BaseResponse<List<District>>()
+            {
+                Data = list,
+                ErrorMessage = string.Empty,
+                IsError = false,
+                Status = 200
+            };
         }
 
         /// <summary>
@@ -43,20 +56,36 @@ namespace GovBE.Controllers
         /// <returns></returns>
         // GET: api/Districts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<District>> GetDistrict(int id)
+        public async Task<BaseResponse<District>> GetDistrict(int id)
         {
-          if (_context.Districts == null)
-          {
-              return NotFound();
-          }
-            var district = await _context.Districts.FindAsync(id);
-
-            if (district == null)
+            if (_context.Districts == null)
             {
-                return NotFound();
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Districts not found"
+                };
+            }
+            var distric = await _context.Districts.FindAsync(id);
+
+            if (distric == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Districts not found"
+                };
             }
 
-            return district;
+            return new BaseResponse<District>
+            {
+                ErrorMessage = string.Empty,
+                Status = 200,
+                Data = distric,
+                IsError = false
+            };
         }
         /// <summary>
         ///  Chỉnh sửa thông tin quận theo id
@@ -67,11 +96,16 @@ namespace GovBE.Controllers
         // PUT: api/Districts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutDistrict(int id, District district)
+        public async Task<BaseResponse<bool>> PutDistrict(int id, District district)
         {
             if (id != district.DistrictId)
             {
-                return BadRequest();
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Update failed"
+                };
             }
 
             _context.Entry(district).State = EntityState.Modified;
@@ -84,7 +118,12 @@ namespace GovBE.Controllers
             {
                 if (!DistrictExists(id))
                 {
-                    return NotFound();
+                    return new()
+                    {
+                        IsError = true,
+                        Data = new(),
+                        ErrorMessage = "Districts not found"
+                    };
                 }
                 else
                 {
@@ -92,7 +131,10 @@ namespace GovBE.Controllers
                 }
             }
 
-            return NoContent();
+            return new()
+            {
+                IsError = false,
+            };
         }
         /// <summary>
         /// Thêm 1 quận mới
@@ -102,16 +144,23 @@ namespace GovBE.Controllers
         // POST: api/Districts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<District>> PostDistrict(District district)
+        public async Task<BaseResponse<District>> PostDistrict(District district)
         {
-          if (_context.Districts == null)
-          {
-              return Problem("Entity set 'GovBE_DatabaseContext.Districts'  is null.");
-          }
+            if (_context.Districts == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Entity set 'pplthd_daContext.Districts'  is null."
+                };
+            }
             _context.Districts.Add(district);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDistrict", new { id = district.DistrictId }, district);
+            return new()
+            {
+                IsError = false
+            };
         }
         /// <summary>
         /// Xóa một quận theo id
@@ -120,22 +169,33 @@ namespace GovBE.Controllers
         /// <returns></returns>
         // DELETE: api/Districts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDistrict(int id)
+        public async Task<BaseResponse<bool>> DeleteDistrict(int id)
         {
             if (_context.Districts == null)
             {
-                return NotFound();
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Districts new context not found."
+                };
             }
             var district = await _context.Districts.FindAsync(id);
             if (district == null)
             {
-                return NotFound();
+                return new()
+                {
+                    IsError = true,
+                    ErrorMessage = "Ads location not found."
+                };
             }
 
             _context.Districts.Remove(district);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return new()
+            {
+                IsError = false
+            };
         }
 
         private bool DistrictExists(int id)
