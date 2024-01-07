@@ -1,6 +1,8 @@
 /* Điểm quảng cáo */
 #database GovBE
 
+create database GovBE
+
 Create table AdsLocation (
 	AdsLocationId INT AUTO_INCREMENT PRIMARY KEY,
     AdsAddress char(200),
@@ -24,7 +26,6 @@ Create table AdsLocation (
 
 );
 
-/////////////////////////////////////////////////
 Create Table Ward
 (
 	WardId INT AUTO_INCREMENT PRIMARY KEY,
@@ -101,7 +102,6 @@ VALUES
 ('Quận Cần Giờ', '2024-01-07 12:00:00');
 
 
-///////////////////////////////////////////////////////////////////////////////
 
 
 

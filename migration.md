@@ -1,7 +1,9 @@
-run file ScripExplain.sql
+dotnet ef migrations add InitialCreate --context UserLoginContext --output-dir Migrations/UserLoginContextMigrate
+update-database -context UserLoginContext
 
-// Register
+
 create from /api/authentication/register-user in swagger
+
 {
   "firstName": "admin",
   "lastName": "admin",
