@@ -1,13 +1,8 @@
 ﻿using GovBE.Commons;
-using GovBE.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using UserLoginBE.Common;
 using UserLoginBE.Context;
 using UserLoginBE.Entities.Models;
-using UserLoginBE.Models;
 
 namespace GovBE.Controllers
 {

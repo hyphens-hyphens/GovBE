@@ -16,6 +16,10 @@
    "T4TemplatePath": null,
    "Tables": [
       {
+         "Name": "__efmigrationshistory",
+         "ObjectType": 0
+      },
+      {
          "Name": "adslocation",
          "ObjectType": 0
       },
@@ -49,6 +53,34 @@
       },
       {
          "Name": "adstype",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetroleclaims",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetroles",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetuserclaims",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetuserlogins",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetuserroles",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetusers",
+         "ObjectType": 0
+      },
+      {
+         "Name": "aspnetusertokens",
          "ObjectType": 0
       },
       {
