@@ -23,7 +23,7 @@ namespace GovBE.Controllers
 
         // GET: api/Adslocations
         /// <summary>
-        /// Test
+        ///  Trả về điểm quảng cáo
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -48,6 +48,11 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        /// Lấy điểm quảng cáo bằng ID
+        /// </summary>
+        /// <param name="id">id điểm quảng cáo</param>
+        /// <returns></returns>
         // GET: api/Adslocations/5
         [HttpGet("{id}")]
         public async Task<BaseResponse<Adslocation>> GetAdslocation(int id)
@@ -81,6 +86,13 @@ namespace GovBE.Controllers
                 IsError = false
             };
         }
+
+        /// <summary>
+        ///    Chỉnh sửa thông tin điểm quảng cáo của id vừa nhập
+        /// </summary>
+        /// <param name="id">id </param>
+        /// <param name="adslocation"></param>
+        /// <returns></returns>
 
         // PUT: api/Adslocations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
