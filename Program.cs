@@ -7,6 +7,15 @@ using System.Reflection;
 using UserLoginBE.Context;
 using UserLoginBE.Services;
 using UserLoginBE.Configures;
+using Serilog.Events;
+using Serilog;
+using Microsoft.IdentityModel.Logging;
+using GovBE.Commons;
+
+
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("GovBE_Database")
@@ -66,6 +75,24 @@ builder.Services.AddCors(op => op.AddPolicy(name: "angularApp", policy =>
     policy.SetIsOriginAllowedToAllowWildcardSubdomains();
 }));
 
+
+
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    // Filter out ASP.NET Core infrastructre logs that are Information and below
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("my-logs/log.txt", rollingInterval: RollingInterval.Minute, rollOnFileSizeLimit: true)
+    .WriteTo.Seq("http://localhost:5341")
+    .WriteTo.MySQL(connectionString, "Logs")
+    .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
+builder.Host.UseSerilog();
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
@@ -84,7 +111,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseSerilogRequestLogging(opts
+        => opts.EnrichDiagnosticContext = LogHelperr.EnrichFromRequest);
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
