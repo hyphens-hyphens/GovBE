@@ -20,7 +20,10 @@ namespace GovBE.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Lấy thông tin bảng reportwarning
+        /// </summary>
+        /// <returns></returns>
         // GET: api/ReportWarnings
         [HttpGet]
         public async Task<BaseResponse<List<Reportwarning>>> GetReportwarnings()
@@ -44,6 +47,11 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        /// Lấy thông tin reportwarning của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của reportwarning muốn tìm kiếm</param>
+        /// <returns></returns>
         // GET: api/ReportWarnings/5
         [HttpGet("{id}")]
         public async Task<BaseResponse<Reportwarning>> GetReportwarning(int id)
@@ -78,6 +86,12 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        /// Update thông tin 1 reportwarning của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của reportwarning muốn chỉnh sửa</param>
+        /// <param name="reportwarning"></param>
+        /// <returns></returns>
         // PUT: api/ReportWarnings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -122,6 +136,11 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        /// Thêm 1 reportwarning mới
+        /// </summary>
+        /// <param name="reportwarning">Thông tin của reportwarning mới</param>
+        /// <returns></returns>
         // POST: api/ReportWarnings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -144,6 +163,11 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        /// Xóa 1 reportwarning theo id
+        /// </summary>
+        /// <param name="id">id của reportwarning muốn xóa</param>
+        /// <returns></returns>
         // DELETE: api/ReportWarnings/5
         [HttpDelete("{id}")]
         public async Task<BaseResponse<bool>> DeleteReportwarning(int id)
