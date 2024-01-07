@@ -434,6 +434,8 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasDefaultValueSql("b'1'")
                 .HasColumnType("bit(1)");
             entity.Property(e => e.LastUpdateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.Latitude).HasPrecision(18, 15);
+            entity.Property(e => e.Longtitude).HasPrecision(18, 15);
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .IsFixedLength();

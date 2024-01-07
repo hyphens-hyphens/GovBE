@@ -33,5 +33,9 @@ public partial class Reportwarning
 
     public int? UpdateUserId { get; set; }
 
+
+    public decimal? Latitude { get; set; }
+
+    public decimal? Longtitude { get; set; }
     public bool IsActive { get; set; }
 }
