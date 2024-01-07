@@ -16,6 +16,10 @@ namespace GovBE.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Lấy thông tin bảng adstype
+        /// </summary>
+        /// <returns></returns>
         // GET: api/AdsTypes
         [HttpGet]
         public async Task<BaseResponse<IEnumerable<Adstype>>> GetAdstypes()
@@ -38,6 +42,11 @@ namespace GovBE.Controllers
             };
         }
 
+        /// <summary>
+        ///  Lấy thông tin adstype của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adstype muốn tìm kiếm</param>
+        /// <returns></returns>
         // GET: api/AdsTypes/5
         [HttpGet("{id}")]
         public async Task<BaseResponse<Adstype>> GetAdstype(int id)
@@ -68,6 +77,12 @@ namespace GovBE.Controllers
             }; ;
         }
 
+        /// <summary>
+        /// Update thông tin adstype của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adstype muốn chỉnh sửa</param>
+        /// <param name="adstype"></param>
+        /// <returns></returns>
         // PUT: api/AdsTypes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -78,7 +93,7 @@ namespace GovBE.Controllers
                 return new()
                 {
                     IsError = true,
-                    ErrorMessage = "Bad request"
+                    ErrorMessage = "Update failed !!!"
                 };
             }
 
@@ -110,7 +125,11 @@ namespace GovBE.Controllers
                 Data = true,
             };
         }
-
+        /// <summary>
+        /// Thêm 1 adstype mới
+        /// </summary>
+        /// <param name="adstype">thông tin adstype mới</param>
+        /// <returns></returns>
         // POST: api/AdsTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -134,7 +153,11 @@ namespace GovBE.Controllers
                 Data = true,
             };
         }
-
+        /// <summary>
+        /// Xóa 1 adstype theo id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adstype muốn xóa</param>
+        /// <returns></returns>
         // DELETE: api/AdsTypes/5
         [HttpDelete("{id}")]
         public async Task<BaseResponse<bool>> DeleteAdstype(int id)
