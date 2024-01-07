@@ -1,5 +1,6 @@
 ﻿using GovBE.Models;
 using Microsoft.AspNetCore.Identity;
+using UserLoginBE.Context;
 using UserLoginBE.Entities.Models;
 
 namespace UserLoginBE.Configures
@@ -17,7 +18,7 @@ namespace UserLoginBE.Configures
                 o.Password.RequiredLength = 6;
                 o.User.RequireUniqueEmail = false;
             })
-            .AddEntityFrameworkStores<GovBE_DatabaseContext>()
+            .AddEntityFrameworkStores<UserLoginContext>()
             .AddDefaultTokenProviders();
         }
     }

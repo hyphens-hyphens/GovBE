@@ -14,7 +14,7 @@ namespace UserLoginBE.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost]
+        [HttpPost("register-user")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto userForRegistration)
         {
             var result = await _authenticationService.RegisterUser(userForRegistration);
