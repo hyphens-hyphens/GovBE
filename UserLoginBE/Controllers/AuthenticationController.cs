@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using UserLoginBE.Models;
 using UserLoginBE.Services;
 
@@ -61,6 +62,18 @@ namespace UserLoginBE.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
             });
+        }
+
+        [HttpPost("forgot-password")]
+        public Task<string> ForgotPassword(string userEmail)
+        {
+            return _authenticationService.ForgotPassword(userEmail);
+        }
+
+        [HttpPost("reset-password")]
+        Task<IdentityResult> ResetPassword(string userEmail, string token, string newPassword)
+        {
+            return _authenticationService.ResetPassword(userEmail, token, newPassword);
         }
     }
 

@@ -8,5 +8,7 @@ namespace UserLoginBE.Services
         Task<IdentityResult> RegisterUser(UserRegistrationDto userForRegistration);
         Task<ValidateUserResponse> ValidateUser(UserRegistrationDto userForAuth);
         Task<string> CreateToken();
+        Task<string> ForgotPassword(string userEmail);
+        Task<IdentityResult> ResetPassword(string userEmail, string token, string newPassword);
     }
 }

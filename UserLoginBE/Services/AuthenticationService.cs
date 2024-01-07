@@ -114,6 +114,36 @@ namespace UserLoginBE.Services
 
             return tokenOptions;
         }
+
+        public async Task<string> ForgotPassword(string userEmail)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
+            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            {
+                return "User not found";
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = $"https://localhost:44374/resetpassword?email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(token)}";
+
+            return callbackUrl;
+        }
+        public async Task<IdentityResult> ResetPassword(string userEmail, string token, string newPassword)
+        {
+            var user = await _userManager.FindByEmailAsync(userEmail);
+
+            if (user == null)
+            {
+                // Handle the scenario where the user is not found
+                throw new ApplicationException("User not found");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            return result;
+        }
+
     }
 
     public class ValidateUserResponse
