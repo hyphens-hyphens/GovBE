@@ -18,7 +18,7 @@ namespace GovBE.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Lấy danh sách Users
         /// </summary>
         /// <returns></returns>
         [HttpGet]
