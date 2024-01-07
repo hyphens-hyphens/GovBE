@@ -22,6 +22,10 @@ namespace GovBE.Controllers
         }
 
         // GET: api/Adslocations
+        /// <summary>
+        /// Test
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<BaseResponse<List<Adslocation>>> GetAdslocations()
         {
