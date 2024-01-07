@@ -1,4 +1,5 @@
 ﻿using GovBE.Commons;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserLoginBE.Context;
@@ -6,11 +7,18 @@ using UserLoginBE.Entities.Models;
 
 namespace GovBE.Controllers
 {
+    /// <summary>
+    /// Users
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly UserLoginContext _context;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
         public UsersController(UserLoginContext userManager)
         {
             _context = userManager;
@@ -22,6 +30,7 @@ namespace GovBE.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<BaseResponse<List<UserApp>>> GetUsers()
         {
             if (_context.Users == null)

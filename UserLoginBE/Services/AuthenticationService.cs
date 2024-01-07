@@ -15,7 +15,7 @@ using UserLoginBE.Models;
 
 namespace UserLoginBE.Services
 {
-    public class AuthenticationService: IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IMapper _mapper;
         private readonly UserManager<UserApp> _userManager;
@@ -50,12 +50,20 @@ namespace UserLoginBE.Services
             return result;
         }
 
-        public async Task<bool> ValidateUser(UserRegistrationDto userForAuth)
+        public async Task<ValidateUserResponse> ValidateUser(UserRegistrationDto userForAuth)
         {
             _user = await _userManager.FindByNameAsync(userForAuth.UserName);
 
-            var result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password));
-            return result;
+            bool result = (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password));
+
+            return new()
+            {
+                FirstName = userForAuth.FirstName,
+                IsSuccess = result,
+                LastName = userForAuth.LastName,
+                Roles = userForAuth.Roles.ToList(),
+                Username = userForAuth?.UserName 
+            };
         }
 
         public async Task<string> CreateToken()
@@ -100,11 +108,20 @@ namespace UserLoginBE.Services
                 issuer: jwtSettings["validIssuer"],
                 audience: jwtSettings["validAudience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["expires"])),
+                expires: DateTime.Now.AddMinutes(1000),
                 signingCredentials: signingCredentials
             );
 
             return tokenOptions;
         }
+    }
+
+    public class ValidateUserResponse
+    {
+        public bool IsSuccess { get; set; }
+        public List<string> Roles { get; set; } = new();
+        public string? FirstName { get; set; } = string.Empty;
+        public string? LastName { get; set; } = string.Empty;
+        public string? Username { get; set; } = string.Empty;
     }
 }

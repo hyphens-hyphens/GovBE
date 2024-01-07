@@ -62,7 +62,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCors(op => op.AddPolicy(name: "angularApp", policy =>
 {
-    policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+    policy.WithOrigins("http://localhost:4200, http://localhost:4201").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     policy.SetIsOriginAllowedToAllowWildcardSubdomains();
 }));
 

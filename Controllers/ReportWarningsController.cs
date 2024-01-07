@@ -65,9 +65,9 @@ namespace GovBE.Controllers
                     ErrorMessage = "Report warning not found"
                 };
             }
-            var reportwarning = await _context.Reportwarnings.FindAsync(id);
+            var reportWarning = await _context.Reportwarnings.FindAsync(id);
 
-            if (reportwarning == null)
+            if (reportWarning == null)
             {
                 return new()
                 {
@@ -81,7 +81,7 @@ namespace GovBE.Controllers
             {
                 ErrorMessage = string.Empty,
                 Status = 200,
-                Data = reportwarning,
+                Data = reportWarning,
                 IsError = false
             };
         }
@@ -199,9 +199,40 @@ namespace GovBE.Controllers
             };
         }
 
+
+        [HttpPost("update-status")]
+        public async Task<BaseResponse<bool>> UpdateStatus([FromBody] UpdateStatusRequest request)
+        {
+            var reportWarning = await _context.Reportwarnings.FindAsync(request.Id);
+
+            if (reportWarning == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Report warning not found"
+                };
+            }
+
+            reportWarning.ReportWarningStatus = request.ToString();
+            _context.Entry(reportWarning).State = EntityState.Modified;
+
+            return new()
+            {
+                IsError = false
+            };
+        }
+
         private bool ReportwarningExists(int id)
         {
             return (_context.Reportwarnings?.Any(e => e.ReportWarningId == id)).GetValueOrDefault();
         }
+    }
+
+    public class UpdateStatusRequest
+    {
+        public int Id { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace UserLoginBE.Services
     public interface IAuthenticationService
     {
         Task<IdentityResult> RegisterUser(UserRegistrationDto userForRegistration);
-        Task<bool> ValidateUser(UserRegistrationDto userForAuth);
+        Task<ValidateUserResponse> ValidateUser(UserRegistrationDto userForAuth);
         Task<string> CreateToken();
     }
 }

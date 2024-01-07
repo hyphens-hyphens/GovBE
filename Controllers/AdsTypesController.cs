@@ -29,7 +29,7 @@ namespace GovBE.Controllers
                 return new()
                 {
                     IsError = true,
-                    ErrorMessage = "Adstype not found"
+                    ErrorMessage = "Ads type not found"
                 };
             }
 
@@ -190,9 +190,12 @@ namespace GovBE.Controllers
             };
         }
 
+
+
         private bool AdstypeExists(int id)
         {
             return (_context.Adstypes?.Any(e => e.AdsTypeId == id)).GetValueOrDefault();
         }
     }
+
 }
