@@ -21,6 +21,10 @@ namespace GovBE.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Lấy thông tin bảng adsnews
+        /// </summary>
+        /// <returns></returns>
         // GET: api/AdsNews
         [HttpGet]
         public async Task<BaseResponse<List<Adsnew>>> GetAdsnews()
@@ -43,7 +47,11 @@ namespace GovBE.Controllers
                 Status = 200
             };
         }
-
+        /// <summary>
+        /// Lấy thông tin adsnew của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adsnew muốn tìm kiếm</param>
+        /// <returns></returns>
         // GET: api/AdsNews/5
         [HttpGet("{id}")]
         public async Task<BaseResponse<Adsnew>> GetAdsnew(int id)
@@ -77,7 +85,12 @@ namespace GovBE.Controllers
                 IsError = false
             };
         }
-
+        /// <summary>
+        /// Update thông tin adsnew của id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adsnew muốn chỉnh sửa</param>
+        /// <param name="adsnew"></param>
+        /// <returns></returns>
         // PUT: api/AdsNews/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -121,7 +134,11 @@ namespace GovBE.Controllers
                 IsError = false,
             };
         }
-
+        /// <summary>
+        /// Thêm 1 adsnew mới
+        /// </summary>
+        /// <param name="adsnew"> thông tin adsnew mới</param>
+        /// <returns></returns>
         // POST: api/AdsNews
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -143,7 +160,11 @@ namespace GovBE.Controllers
                 IsError = false
             };
         }
-
+        /// <summary>
+        /// Xóa 1 adsnew theo id vừa nhập
+        /// </summary>
+        /// <param name="id">id của adsnew muốn xóa</param>
+        /// <returns></returns>
         // DELETE: api/AdsNews/5
         [HttpDelete("{id}")]
         public async Task<BaseResponse<bool>> DeleteAdsnew(int id)
