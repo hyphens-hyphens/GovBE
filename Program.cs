@@ -4,16 +4,23 @@ using Microsoft.EntityFrameworkCore;
 using GovBE.Models;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using UserLoginBE.Context;
+using UserLoginBE.Services;
+using UserLoginBE.Configures;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("GovBE_Database")
     ?? throw new Exception("Can't not get connection string");
-
+builder.Services.ConfigureIdentity();
 builder.Services
     .AddDbContext<GovBE_DatabaseContext>(options =>
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)))
+    .AddDbContext<UserLoginContext>(options =>
         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 // Add services to the container.
-
+//DI
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+//
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +38,7 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,10 +65,19 @@ builder.Services.AddCors(op => op.AddPolicy(name: "angularApp", policy =>
     policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     policy.SetIsOriginAllowedToAllowWildcardSubdomains();
 }));
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<UserLoginContext>();
+    dbContext.Database.EnsureCreated();
+    // Here is the migration executed
+    dbContext.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -69,7 +86,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors("angularApp");
 
