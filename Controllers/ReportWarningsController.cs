@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GovBE.Models;
 using GovBE.Commons;
-using System.Numerics;
 
 namespace GovBE.Controllers
 {
@@ -22,15 +16,16 @@ namespace GovBE.Controllers
             _context = context;
             _logger = logger;
         }
+
         /// <summary>
         /// Lấy thông tin bảng reportwarning
         /// </summary>
         /// <returns></returns>
         // GET: api/ReportWarnings
         [HttpGet]
-        public async Task<BaseResponse<List<Reportwarning>>> GetReportwarnings()
+        public async Task<BaseResponse<List<ReportWarning>>> GetReportWarnings()
         {
-            _logger.LogInformation("Call ReportWarningsController.GetReportwarnings");
+            _logger.LogInformation("Call ReportWarningsController.GetReportWarnings");
             if (_context.Reportwarnings == null)
             {
                 return new()
@@ -40,8 +35,29 @@ namespace GovBE.Controllers
                     ErrorMessage = "Report warning not found"
                 };
             }
-            var list = await _context.Reportwarnings.ToListAsync();
-            return new BaseResponse<List<Reportwarning>>()
+
+            var list = await (from a in _context.Reportwarnings
+                                 from b in _context.Adsnews.Where(x => x.AdsNewId == a.AdsNewId)
+                                 select new ReportWarning()
+                                 {
+                                     Latitude = b.Latitude,
+                                     Longtitude = b.Longtitude,
+                                     AdsLocationId = a.AdsLocationId,
+                                     AdsNewId = a.AdsNewId,
+                                     Comment = a.Comment,
+                                     CreateOnUtc = a.CreateOnUtc,
+                                     CreateUserId = a.CreateUserId,
+                                     Email = a.Email,
+                                     FullName = a.FullName,
+                                     IsActive = a.IsActive,
+                                     LastUpdateOnUtc = a.LastUpdateOnUtc,
+                                     PhoneNumber = a.PhoneNumber,
+                                     ReportWarningId = a.ReportWarningId,
+                                     ReportWarningStatus = a.ReportWarningStatus,
+                                     WarningType = a.WarningType
+                                 }).ToListAsync();
+
+            return new BaseResponse<List<ReportWarning>>()
             {
                 Data = list,
                 ErrorMessage = string.Empty,
@@ -57,7 +73,7 @@ namespace GovBE.Controllers
         /// <returns></returns>
         // GET: api/ReportWarnings/5
         [HttpGet("{id}")]
-        public async Task<BaseResponse<Reportwarning>> GetReportwarning(int id)
+        public async Task<BaseResponse<ReportWarning?>> GetReportwarning(int id)
         {
             if (_context.Reportwarnings == null)
             {
@@ -68,7 +84,28 @@ namespace GovBE.Controllers
                     ErrorMessage = "Report warning not found"
                 };
             }
-            var reportWarning = await _context.Reportwarnings.FindAsync(id);
+            //var reportWarning = await _context.Reportwarnings.FindAsync(id);
+
+            var reportWarning = await (from a in _context.Reportwarnings
+                         from b in _context.Adsnews.Where(x => x.AdsNewId == a.AdsNewId)
+                         select new ReportWarning()
+                         {
+                             Latitude = b.Latitude,
+                             Longtitude = b.Longtitude,
+                             AdsLocationId = a.AdsLocationId,
+                             AdsNewId = a.AdsNewId,
+                             Comment = a.Comment,
+                             CreateOnUtc = a.CreateOnUtc,
+                             CreateUserId = a.CreateUserId,
+                             Email = a.Email,
+                             FullName = a.FullName,
+                             IsActive = a.IsActive,
+                             LastUpdateOnUtc = a.LastUpdateOnUtc,
+                             PhoneNumber = a.PhoneNumber,
+                             ReportWarningId = a.ReportWarningId,
+                             ReportWarningStatus = a.ReportWarningStatus,
+                             WarningType = a.WarningType
+                         }).FirstOrDefaultAsync();
 
             if (reportWarning == null)
             {
@@ -80,7 +117,7 @@ namespace GovBE.Controllers
                 };
             }
 
-            return new BaseResponse<Reportwarning>
+            return new()
             {
                 ErrorMessage = string.Empty,
                 Status = 200,
@@ -98,7 +135,7 @@ namespace GovBE.Controllers
         // PUT: api/ReportWarnings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<BaseResponse<bool>> PutReportwarning(int id, Reportwarning reportwarning)
+        public async Task<BaseResponse<bool>> PutReportwarning(int id, ReportWarning reportwarning)
         {
             if (id != reportwarning.ReportWarningId)
             {
@@ -142,22 +179,39 @@ namespace GovBE.Controllers
         /// <summary>
         /// Thêm 1 reportwarning mới
         /// </summary>
-        /// <param name="reportwarning">Thông tin của reportwarning mới</param>
+        /// <param name="reportWarning">Thông tin của reportwarning mới</param>
         /// <returns></returns>
         // POST: api/ReportWarnings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<BaseResponse<Reportwarning>> PostReportwarning(Reportwarning reportwarning)
+        public async Task<BaseResponse<ReportWarning>> PostReportwarning(ReportWarning reportWarning)
         {
             if (_context.Reportwarnings == null)
             {
                 return new()
                 {
                     IsError = true,
-                    ErrorMessage = "Entity set 'pplthd_daContext.Reportwarnings'  is null."
+                    ErrorMessage = "Entity set 'Reportwarnings'  is null."
                 };
             }
-            _context.Reportwarnings.Add(reportwarning);
+
+            if (!_context.Adsnews.Any(x => x.AdsNewId == reportWarning.AdsNewId))
+            {
+                var newAds = new Adsnew()
+                {
+                    AdsAddress = $"{reportWarning.Comment}",
+                    Latitude = reportWarning.Latitude,
+                    CreateOnUtc = DateTime.Now,
+                    Longtitude = reportWarning.Longtitude,
+                    IsActive = true,
+                };
+                _context.Adsnews.Add(newAds);
+                await _context.SaveChangesAsync();
+
+                reportWarning.AdsNewId = newAds.AdsNewId;
+            }
+
+            _context.Reportwarnings.Add(reportWarning);
             await _context.SaveChangesAsync();
 
             return new()
@@ -217,7 +271,6 @@ namespace GovBE.Controllers
                     ErrorMessage = "Report warning not found"
                 };
             }
-
             reportWarning.ReportWarningStatus = request.ToString();
             _context.Entry(reportWarning).State = EntityState.Modified;
 
@@ -227,10 +280,72 @@ namespace GovBE.Controllers
             };
         }
 
+
+        [HttpGet("report-warning-by-point")]
+        public async Task<BaseResponse<ReportWarning>> GetReportWarningByPoint(PointPosition pointPosition)
+        {
+            if (_context.Reportwarnings == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Report warning not found"
+                };
+            }
+
+            var reportWarning = await
+                (from a in _context.Reportwarnings
+                from b in _context.Adsnews.Where(x => x.AdsNewId == a.AdsNewId
+                    && x.Longtitude == pointPosition.Longtitude && x.Latitude == pointPosition.Latitude)
+                select new ReportWarning()
+                {
+                    Latitude = pointPosition.Latitude,
+                    Longtitude = pointPosition.Longtitude,
+                    AdsLocationId = a.AdsLocationId,
+                    AdsNewId = a.AdsNewId,
+                    Comment = a.Comment,
+                    CreateOnUtc = a.CreateOnUtc,
+                    CreateUserId = a.CreateUserId,
+                    Email = a.Email,
+                    FullName = a.FullName,
+                    IsActive = a.IsActive,
+                    LastUpdateOnUtc = a.LastUpdateOnUtc,
+                    PhoneNumber = a.PhoneNumber,
+                    ReportWarningId = a.ReportWarningId,
+                    ReportWarningStatus = a.ReportWarningStatus,
+                    WarningType = a.WarningType
+                } ).FirstOrDefaultAsync();
+
+            if (reportWarning == null)
+            {
+                return new()
+                {
+                    IsError = true,
+                    Data = new(),
+                    ErrorMessage = "Report warning not found"
+                };
+            }
+
+            return new BaseResponse<ReportWarning>
+            {
+                ErrorMessage = string.Empty,
+                Status = 200,
+                Data = reportWarning,
+                IsError = false
+            };
+        }
+
         private bool ReportwarningExists(int id)
         {
             return (_context.Reportwarnings?.Any(e => e.ReportWarningId == id)).GetValueOrDefault();
         }
+    }
+
+    public class ReportWarning : Reportwarning
+    {
+        public decimal? Longtitude { get; set; }
+        public decimal? Latitude { get; set; }
     }
 
     public class UpdateStatusRequest

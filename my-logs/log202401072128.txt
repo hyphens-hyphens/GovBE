@@ -1,0 +1,5 @@
+2024-01-07 21:28:35.949 +07:00 [INF] HTTP OPTIONS /api/AdsNews responded 204 in 0.1093 ms
+2024-01-07 21:28:35.964 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsNewId`, `a`.`AdsAddress`, `a`.`AdsLocationId`, `a`.`AdsTypeId`, `a`.`City`, `a`.`Comment`, `a`.`CompanyAddress`, `a`.`CompanyInfo`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`District`, `a`.`Email`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`PhoneNumber`, `a`.`ProcessingStatus`, `a`.`SizeUnit`, `a`.`StartDate`, `a`.`UpdateUserId`, `a`.`Ward`, `a`.`Width`
+FROM `adsnew` AS `a`
+2024-01-07 21:28:35.968 +07:00 [INF] HTTP GET /api/AdsNews responded 200 in 12.3597 ms

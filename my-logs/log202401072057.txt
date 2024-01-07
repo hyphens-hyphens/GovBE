@@ -1,0 +1,55 @@
+2024-01-07 20:57:10.662 +07:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE WHEN COUNT(*) = 0 THEN FALSE ELSE TRUE END
+FROM information_schema.tables
+WHERE table_type = 'BASE TABLE' AND table_schema = 'GovBE'
+2024-01-07 20:57:10.707 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='GovBE' AND TABLE_NAME='__EFMigrationsHistory';
+2024-01-07 20:57:10.714 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='GovBE' AND TABLE_NAME='__EFMigrationsHistory';
+2024-01-07 20:57:10.734 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `MigrationId`, `ProductVersion`
+FROM `__EFMigrationsHistory`
+ORDER BY `MigrationId`;
+2024-01-07 20:57:10.755 +07:00 [INF] No migrations were applied. The database is already up to date.
+2024-01-07 20:57:10.965 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-01-07 20:57:10.965 +07:00 [INF] Hosting environment: Development
+2024-01-07 20:57:10.965 +07:00 [INF] Content root path: F:\LienThongDaiHoc\HK3\T4_CongNgheLapTrinhHienDai\DA\GovBE
+2024-01-07 20:57:38.659 +07:00 [INF] HTTP OPTIONS /api/AdsTypes responded 204 in 512.5938 ms
+2024-01-07 20:57:38.862 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adslocation' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adslocationupdate' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adsnew' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adsnewupdate' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adsprocessing' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adsstatus' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Adstype' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Reportwarning' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:38.863 +07:00 [WRN] The 'bool' property 'IsActive' on entity type 'Warningtype' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2024-01-07 20:57:39.010 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsTypeId`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`DisplayName`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Name`, `a`.`UpdateUserId`
+FROM `adstype` AS `a`
+2024-01-07 20:57:39.069 +07:00 [INF] HTTP GET /api/AdsTypes responded 200 in 405.2239 ms
+2024-01-07 20:57:46.095 +07:00 [INF] HTTP OPTIONS /api/AdsLocations responded 204 in 1.9557 ms
+2024-01-07 20:57:46.153 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsLocationId`, `a`.`AdsAddress`, `a`.`AdsStatus`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`Quantity`, `a`.`SizeUnit`, `a`.`TypeID`, `a`.`UpdateUserId`, `a`.`Width`
+FROM `adslocation` AS `a`
+2024-01-07 20:57:46.195 +07:00 [INF] HTTP GET /api/AdsLocations responded 200 in 97.9990 ms
+2024-01-07 20:57:48.826 +07:00 [INF] HTTP OPTIONS /api/AdsLocations/1 responded 204 in 0.2220 ms
+2024-01-07 20:57:48.959 +07:00 [INF] Executed DbCommand (27ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsLocationId`, `a`.`AdsAddress`, `a`.`AdsStatus`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`Quantity`, `a`.`SizeUnit`, `a`.`TypeID`, `a`.`UpdateUserId`, `a`.`Width`
+FROM `adslocation` AS `a`
+WHERE `a`.`AdsLocationId` = @__p_0
+LIMIT 1
+2024-01-07 20:57:48.965 +07:00 [INF] HTTP GET /api/AdsLocations/1 responded 200 in 137.0277 ms
+2024-01-07 20:57:51.017 +07:00 [INF] HTTP OPTIONS /api/AdsLocations/2 responded 204 in 0.1408 ms
+2024-01-07 20:57:51.032 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsLocationId`, `a`.`AdsAddress`, `a`.`AdsStatus`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`Quantity`, `a`.`SizeUnit`, `a`.`TypeID`, `a`.`UpdateUserId`, `a`.`Width`
+FROM `adslocation` AS `a`
+WHERE `a`.`AdsLocationId` = @__p_0
+LIMIT 1
+2024-01-07 20:57:51.034 +07:00 [INF] HTTP GET /api/AdsLocations/2 responded 200 in 12.4913 ms
+2024-01-07 20:57:51.809 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsLocationId`, `a`.`AdsAddress`, `a`.`AdsStatus`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`Quantity`, `a`.`SizeUnit`, `a`.`TypeID`, `a`.`UpdateUserId`, `a`.`Width`
+FROM `adslocation` AS `a`
+WHERE `a`.`AdsLocationId` = @__p_0
+LIMIT 1
+2024-01-07 20:57:51.810 +07:00 [INF] HTTP GET /api/AdsLocations/1 responded 200 in 9.2999 ms

@@ -1,0 +1,31 @@
+2024-01-07 21:27:12.769 +07:00 [INF] HTTP OPTIONS /api/authentication/login responded 204 in 1.9050 ms
+2024-01-07 21:27:13.012 +07:00 [INF] Executed DbCommand (21ms) [Parameters=[@__normalizedUserName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`District`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`TwoFactorEnabled`, `a`.`UserName`, `a`.`Ward`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedUserName` = @__normalizedUserName_0
+LIMIT 1
+2024-01-07 21:27:13.194 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[@__userId_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a0`.`Name`
+FROM `AspNetUserRoles` AS `a`
+INNER JOIN `AspNetRoles` AS `a0` ON `a`.`RoleId` = `a0`.`Id`
+WHERE `a`.`UserId` = @__userId_0
+2024-01-07 21:27:13.239 +07:00 [INF] HTTP POST /api/authentication/login responded 200 in 461.5339 ms
+2024-01-07 21:27:13.320 +07:00 [INF] HTTP OPTIONS /api/AdsNews responded 204 in 0.2351 ms
+2024-01-07 21:27:13.361 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`AdsNewId`, `a`.`AdsAddress`, `a`.`AdsLocationId`, `a`.`AdsTypeId`, `a`.`City`, `a`.`Comment`, `a`.`CompanyAddress`, `a`.`CompanyInfo`, `a`.`CreateOnUtc`, `a`.`CreateUserId`, `a`.`District`, `a`.`Email`, `a`.`EndDate`, `a`.`Height`, `a`.`IsActive`, `a`.`LastUpdateOnUtc`, `a`.`Latitude`, `a`.`Longtitude`, `a`.`PhoneNumber`, `a`.`ProcessingStatus`, `a`.`SizeUnit`, `a`.`StartDate`, `a`.`UpdateUserId`, `a`.`Ward`, `a`.`Width`
+FROM `adsnew` AS `a`
+2024-01-07 21:27:13.369 +07:00 [INF] HTTP GET /api/AdsNews responded 200 in 46.6424 ms
+2024-01-07 21:27:21.530 +07:00 [INF] HTTP OPTIONS /api/ReportWarnings responded 204 in 0.1159 ms
+2024-01-07 21:27:21.538 +07:00 [INF] Call ReportWarningsController.GetReportWarnings
+2024-01-07 21:27:21.560 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Latitude`, `a`.`Longtitude`, `r`.`AdsLocationId`, `r`.`AdsNewId`, `r`.`Comment`, `r`.`CreateOnUtc`, `r`.`CreateUserId`, `r`.`Email`, `r`.`FullName`, `r`.`IsActive`, `r`.`LastUpdateOnUtc`, `r`.`PhoneNumber`, `r`.`ReportWarningId`, `r`.`ReportWarningStatus`, `r`.`WarningType`
+FROM `reportwarning` AS `r`
+INNER JOIN `adsnew` AS `a` ON `r`.`AdsNewId` = `a`.`AdsNewId`
+2024-01-07 21:27:21.565 +07:00 [INF] HTTP GET /api/ReportWarnings responded 200 in 33.3642 ms
+2024-01-07 21:27:29.722 +07:00 [INF] HTTP OPTIONS /api/ReportWarnings responded 204 in 0.1403 ms
+2024-01-07 21:27:29.726 +07:00 [INF] Call ReportWarningsController.GetReportWarnings
+2024-01-07 21:27:29.735 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Latitude`, `a`.`Longtitude`, `r`.`AdsLocationId`, `r`.`AdsNewId`, `r`.`Comment`, `r`.`CreateOnUtc`, `r`.`CreateUserId`, `r`.`Email`, `r`.`FullName`, `r`.`IsActive`, `r`.`LastUpdateOnUtc`, `r`.`PhoneNumber`, `r`.`ReportWarningId`, `r`.`ReportWarningStatus`, `r`.`WarningType`
+FROM `reportwarning` AS `r`
+INNER JOIN `adsnew` AS `a` ON `r`.`AdsNewId` = `a`.`AdsNewId`
+2024-01-07 21:27:29.736 +07:00 [INF] HTTP GET /api/ReportWarnings responded 200 in 11.6598 ms

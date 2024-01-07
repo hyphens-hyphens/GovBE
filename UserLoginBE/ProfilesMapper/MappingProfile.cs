@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using GovBE.Controllers;
+using GovBE.Models;
 using UserLoginBE.Entities.Models;
 using UserLoginBE.Models;
 

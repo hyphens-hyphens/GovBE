@@ -30,7 +30,6 @@ namespace GovBE.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public async Task<BaseResponse<List<UserApp>>> GetUsers()
         {
             if (_context.Users == null)

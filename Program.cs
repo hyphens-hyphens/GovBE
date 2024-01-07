@@ -9,12 +9,7 @@ using UserLoginBE.Services;
 using UserLoginBE.Configures;
 using Serilog.Events;
 using Serilog;
-using Microsoft.IdentityModel.Logging;
 using GovBE.Commons;
-
-
-
-
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -74,8 +69,6 @@ builder.Services.AddCors(op => op.AddPolicy(name: "angularApp", policy =>
     policy.WithOrigins("http://localhost:4200, http://localhost:4201").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     policy.SetIsOriginAllowedToAllowWildcardSubdomains();
 }));
-
-
 
 
 Log.Logger = new LoggerConfiguration()
