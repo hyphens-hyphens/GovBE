@@ -25,5 +25,5 @@ public partial class Adsnewupdate
 
     public int? UpdateUserId { get; set; }
 
-    public bool IsActive { get; set; }
+    public ulong IsActive { get; set; }
 }

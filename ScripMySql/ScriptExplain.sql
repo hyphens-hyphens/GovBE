@@ -24,6 +24,87 @@ Create table AdsLocation (
 
 );
 
+/////////////////////////////////////////////////
+Create Table Ward
+(
+	WardId INT AUTO_INCREMENT PRIMARY KEY,
+	FullName char(30),
+    DistrictId int,
+    CreateOnUtc DateTime
+    #FOREIGN KEY (DistrictId) REFERENCES District(DistrictId)
+);
+
+Create Table District
+(
+	DistrictId INT AUTO_INCREMENT PRIMARY KEY,
+	FullName char(30),
+    CreateOnUtc DateTime
+);
+
+INSERT INTO Ward (FullName, DistrictId, CreateOnUtc)
+VALUES 
+-- Phường của Quận 1
+('Phường Tân Định', 1, '2024-01-07 12:00:00'),
+('Phường Đa Kao', 1, '2024-01-07 12:00:00'),
+('Phường Bến Nghé', 1, '2024-01-07 12:00:00'),
+
+-- Phường của Quận 2
+('Phường Thảo Điền', 2, '2024-01-07 12:00:00'),
+('Phường An Phú', 2, '2024-01-07 12:00:00'),
+('Phường Bình An', 2, '2024-01-07 12:00:00'),
+
+-- Phường của Quận 3
+('Phường 1', 3, '2024-01-07 12:00:00'),
+('Phường 2', 3, '2024-01-07 12:00:00'),
+('Phường 3', 3, '2024-01-07 12:00:00'),
+
+-- Phường của Quận 4
+('Phường 1', 4, '2024-01-07 12:00:00'),
+('Phường 2', 4, '2024-01-07 12:00:00'),
+('Phường 3', 4, '2024-01-07 12:00:00'),
+
+-- Phường của Quận 5
+('Phường 1', 5, '2024-01-07 12:00:00'),
+('Phường 2', 5, '2024-01-07 12:00:00'),
+('Phường 3', 5, '2024-01-07 12:00:00')
+-- Thêm các phường khác nếu cần
+;
+
+    
+
+
+INSERT INTO District (FullName, CreateOnUtc)
+VALUES 
+('Quận 1', '2024-01-07 12:00:00'),
+('Quận 2', '2024-01-07 12:00:00'),
+('Quận 3', '2024-01-07 12:00:00'),
+('Quận 4', '2024-01-07 12:00:00'),
+('Quận 5', '2024-01-07 12:00:00'),
+('Quận 6', '2024-01-07 12:00:00'),
+('Quận 7', '2024-01-07 12:00:00'),
+('Quận 8', '2024-01-07 12:00:00'),
+('Quận 9', '2024-01-07 12:00:00'),
+('Quận 10', '2024-01-07 12:00:00'),
+('Quận 11', '2024-01-07 12:00:00'),
+('Quận 12', '2024-01-07 12:00:00'),
+('Quận Bình Thạnh', '2024-01-07 12:00:00'),
+('Quận Tân Bình', '2024-01-07 12:00:00'),
+('Quận Tân Phú', '2024-01-07 12:00:00'),
+('Quận Phú Nhuận', '2024-01-07 12:00:00'),
+('Quận Gò Vấp', '2024-01-07 12:00:00'),
+('Quận Bình Tân', '2024-01-07 12:00:00'),
+('Quận Thủ Đức', '2024-01-07 12:00:00'),
+('Quận Bình Chánh', '2024-01-07 12:00:00'),
+('Quận Củ Chi', '2024-01-07 12:00:00'),
+('Quận Hóc Môn', '2024-01-07 12:00:00'),
+('Quận Nhà Bè', '2024-01-07 12:00:00'),
+('Quận Cần Giờ', '2024-01-07 12:00:00');
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+
 /*Quảng cáo trên điểm quảng cáo*/
 Create Table AdsNew(
 	AdsNewId INT AUTO_INCREMENT PRIMARY KEY,

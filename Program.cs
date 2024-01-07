@@ -77,8 +77,7 @@ builder.Services.AddCors(op => op.AddPolicy(name: "angularApp", policy =>
 
 
 
-
-Log.Logger = new LoggerConfiguration()
+Serilog.Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     // Filter out ASP.NET Core infrastructre logs that are Information and below

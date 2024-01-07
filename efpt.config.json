@@ -84,11 +84,23 @@
          "ObjectType": 0
       },
       {
+         "Name": "district",
+         "ObjectType": 0
+      },
+      {
+         "Name": "logs",
+         "ObjectType": 0
+      },
+      {
          "Name": "reportwarning",
          "ObjectType": 0
       },
       {
          "Name": "reportwarningurl",
+         "ObjectType": 0
+      },
+      {
+         "Name": "ward",
          "ObjectType": 0
       },
       {

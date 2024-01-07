@@ -45,11 +45,17 @@ public partial class GovBE_DatabaseContext : DbContext
 
     public virtual DbSet<Aspnetusertoken> Aspnetusertokens { get; set; }
 
+    public virtual DbSet<District> Districts { get; set; }
+
     public virtual DbSet<Efmigrationshistory> Efmigrationshistories { get; set; }
+
+    public virtual DbSet<Log> Logs { get; set; }
 
     public virtual DbSet<Reportwarning> Reportwarnings { get; set; }
 
     public virtual DbSet<Reportwarningurl> Reportwarningurls { get; set; }
+
+    public virtual DbSet<Ward> Wards { get; set; }
 
     public virtual DbSet<Warningtype> Warningtypes { get; set; }
 
@@ -365,6 +371,18 @@ public partial class GovBE_DatabaseContext : DbContext
                 .HasConstraintName("FK_AspNetUserTokens_AspNetUsers_UserId");
         });
 
+        modelBuilder.Entity<District>(entity =>
+        {
+            entity.HasKey(e => e.DistrictId).HasName("PRIMARY");
+
+            entity.ToTable("district");
+
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.FullName)
+                .HasMaxLength(30)
+                .IsFixedLength();
+        });
+
         modelBuilder.Entity<Efmigrationshistory>(entity =>
         {
             entity.HasKey(e => e.MigrationId).HasName("PRIMARY");
@@ -375,6 +393,25 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.Property(e => e.ProductVersion)
                 .IsRequired()
                 .HasMaxLength(32);
+        });
+
+        modelBuilder.Entity<Log>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("logs");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Exception).HasColumnType("text");
+            entity.Property(e => e.Level).HasMaxLength(15);
+            entity.Property(e => e.Message).HasColumnType("text");
+            entity.Property(e => e.Properties).HasColumnType("text");
+            entity.Property(e => e.Template).HasColumnType("text");
+            entity.Property(e => e.Timestamp).HasMaxLength(100);
+            entity.Property(e => e.Ts)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp")
+                .HasColumnName("_ts");
         });
 
         modelBuilder.Entity<Reportwarning>(entity =>
@@ -417,6 +454,18 @@ public partial class GovBE_DatabaseContext : DbContext
             entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
             entity.Property(e => e.Url)
                 .HasMaxLength(200)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Ward>(entity =>
+        {
+            entity.HasKey(e => e.WardId).HasName("PRIMARY");
+
+            entity.ToTable("ward");
+
+            entity.Property(e => e.CreateOnUtc).HasColumnType("datetime");
+            entity.Property(e => e.FullName)
+                .HasMaxLength(30)
                 .IsFixedLength();
         });
 
